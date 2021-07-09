@@ -145,6 +145,11 @@
           <ul class="sidebar-menu">
             <li class="menu-header">Main</li>
 
+            <li >
+              <a href="{{ route('dashboard') }}" ><i data-feather="monitor"></i><span>Dashboard</span></a>
+              
+            </li>
+            
             @if(Gate::check('role-list') || Gate::check('role-create'))
             <li class="dropdown {{ Request::is('admin/roles', 'admin/roles/create') ? 'active' : '' }}">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="anchor"></i><span>Roles</span></a>
