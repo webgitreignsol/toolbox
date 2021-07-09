@@ -19,7 +19,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home','HomeController@index')->name('home');
+Route::get('/home', function () {
+		return redirect('/dashboard');
+	});
 
 Route::group(['namespace' => 'Dashboard', 'prefix' => 'dashboard', 'middleware' => ['auth']], function (){
 		Route::get('/', 'DashboardController@index')->name('dashboard');		
@@ -30,9 +32,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
 	Route::get('/', function () {
 		return redirect('/dashobard');
 	});
-	Route::get('/home', function () {
-		return redirect('/dashboard');
-	});
+	
 	
 	Route::group(['namespace' => 'Role'], function (){
 		Route::get('roles', 'RoleController@index')->name('roles.index')->middleware('permission:role-list');
