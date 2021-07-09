@@ -13,26 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect('/home');
-});
+	Route::get('/', function () { return redirect('/home');	});
 
 Auth::routes();
 
-Route::get('/home', function () {
-		return redirect('/dashboard');
-	});
+	Route::get('/home', function () { return redirect('/dashboard');});
 
-Route::group(['namespace' => 'Dashboard', 'prefix' => 'dashboard', 'middleware' => ['auth']], function (){
+	Route::group(['namespace' => 'Dashboard', 'prefix' => 'dashboard', 'middleware' => ['auth']], function (){
 		Route::get('/', 'DashboardController@index')->name('dashboard');		
-});	
+	});	
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth']], function(){
-
-	Route::get('/', function () {
-		return redirect('/dashobard');
-	});
-	
 	
 	Route::group(['namespace' => 'Role'], function (){
 		Route::get('roles', 'RoleController@index')->name('roles.index')->middleware('permission:role-list');
@@ -47,10 +38,29 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
 		Route::get('users', 'UserController@index')->name('users.index')->middleware('permission:user-list');
 		Route::get('users/create', 'UserController@create')->name('users.create')->middleware('permission:user-create');
 		Route::post('users', 'UserController@store')->name('users.store')->middleware('permission:user-create');
-		Route::get('users/{id}/edit', 'UserController@edit')->name('users.edit')->middleware('permission:user-edit');
+        Route::get('users/{id}/edit', 'UserController@edit')->name('users.edit')->middleware('permission:user-edit');
+        Route::get('users/{id}/view', 'UserController@view')->name('users.view');
 		Route::put('users/{id}', 'UserController@update')->name('users.update')->middleware('permission:user-edit');
 		Route::any('users/{id}/destroy', 'UserController@destroy')->name('users.destroy')->middleware('permission:user-delete');
 	});
+
+	Route::group(['namespace' => 'Passenger'], function (){
+        Route::get('passengers', 'PassengerController@index')->name('passengers.index')->middleware('permission:passenger-list');
+        Route::get('passengers/create', 'PassengerController@create')->name('passengers.create')->middleware('permission:passenger-create');
+        Route::post('passengers', 'PassengerController@store')->name('passengers.store')->middleware('permission:passenger-create');
+        Route::get('passengers/{id}/edit', 'PassengerController@edit')->name('passengers.edit')->middleware('permission:passenger-edit');
+        Route::put('passengers/{id}', 'PassengerController@update')->name('passengers.update')->middleware('permission:passenger-edit');
+        Route::any('passengers/{id}/destroy', 'PassengerController@destroy')->name('passengers.destroy')->middleware('permission:passenger-delete');
+    });
+
+    Route::group(['namespace' => 'Driver'], function (){
+        Route::get('drivers', 'DriverController@index')->name('drivers.index')->middleware('permission:driver-list');
+        Route::get('drivers/create', 'DriverController@create')->name('drivers.create')->middleware('permission:driver-create');
+        Route::post('drivers', 'DriverController@store')->name('drivers.store')->middleware('permission:driver-create');
+        Route::get('drivers/{id}/edit', 'DriverController@edit')->name('drivers.edit')->middleware('permission:driver-edit');
+        Route::put('drivers/{id}', 'DriverController@update')->name('drivers.update')->middleware('permission:driver-edit');
+        Route::any('drivers/{id}/destroy', 'DriverController@destroy')->name('drivers.destroy')->middleware('permission:driver-delete');
+    });
 
 	Route::group(['namespace' => 'Permission'], function (){
 		Route::get('permissions', 'PermissionController@index')->name('permissions.index')->middleware('permission:permission-list');
@@ -59,6 +69,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
 		Route::get('permissions/{id}/edit', 'PermissionController@edit')->name('permissions.edit')->middleware('permission:permission-edit');
 		Route::put('permissions/{id}', 'PermissionController@update')->name('permissions.update')->middleware('permission:permission-edit');
 		Route::any('permissions/{id}/destroy', 'PermissionController@destroy')->name('permissions.destroy')->middleware('permission:permission-delete');
+	});
+
+	Route::group(['namespace' => 'Rides'], function (){
+		Route::get('rides', 'IndexController@index')->name('permissions.index')->middleware('permission:permission-list');
 	});
 
 });
