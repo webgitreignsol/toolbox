@@ -48,7 +48,7 @@
                                     <i class="icon material-icons">done</i>
                                     <label>Create</label>
                                   </div>
-                                </div> 
+                                </div>
                             </td>
                             <td>
                                 <div class="pretty p-icon p-jelly p-round p-bigger">
@@ -66,7 +66,7 @@
                                     <i class="icon material-icons">done</i>
                                     <label>Delete</label>
                                   </div>
-                                </div> 
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -87,7 +87,7 @@
                                     <i class="icon material-icons">done</i>
                                     <label>Create</label>
                                   </div>
-                                </div> 
+                                </div>
                             </td>
                             <td>
                                 <div class="pretty p-icon p-jelly p-round p-bigger">
@@ -105,11 +105,11 @@
                                     <i class="icon material-icons">done</i>
                                     <label>Delete</label>
                                   </div>
-                                </div> 
+                                </div>
                             </td>
                         </tr>
                         <tr>
-                            <td>Users</td>
+                            <td>Admins</td>
                             <td>
                                 <div class="pretty p-icon p-jelly p-round p-bigger">
                                   {{ Form::checkbox('permission[user-list]', 'user-list') }}
@@ -126,7 +126,7 @@
                                     <i class="icon material-icons">done</i>
                                     <label>Create</label>
                                   </div>
-                                </div> 
+                                </div>
                             </td>
                             <td>
                                 <div class="pretty p-icon p-jelly p-round p-bigger">
@@ -144,9 +144,87 @@
                                     <i class="icon material-icons">done</i>
                                     <label>Delete</label>
                                   </div>
-                                </div> 
+                                </div>
                             </td>
                         </tr>
+                    <tr>
+                        <td>Drivers</td>
+                        <td>
+                            <div class="pretty p-icon p-jelly p-round p-bigger">
+                                {{ Form::checkbox('permission[driver-list]', 'driver-list') }}
+                                <div class="state p-info">
+                                    <i class="icon material-icons">done</i>
+                                    <label>List</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="pretty p-icon p-jelly p-round p-bigger">
+                                {{ Form::checkbox('permission[driver-create]', 'driver-create') }}
+                                <div class="state p-info">
+                                    <i class="icon material-icons">done</i>
+                                    <label>Create</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="pretty p-icon p-jelly p-round p-bigger">
+                                {{ Form::checkbox('permission[driver-edit]', 'driver-edit') }}
+                                <div class="state p-info">
+                                    <i class="icon material-icons">done</i>
+                                    <label>Edit</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="pretty p-icon p-jelly p-round p-bigger">
+                                {{ Form::checkbox('permission[driver-delete]', 'driver-delete') }}
+                                <div class="state p-info">
+                                    <i class="icon material-icons">done</i>
+                                    <label>Delete</label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Passengers</td>
+                        <td>
+                            <div class="pretty p-icon p-jelly p-round p-bigger">
+                                {{ Form::checkbox('permission[passenger-list]', 'passenger-list') }}
+                                <div class="state p-info">
+                                    <i class="icon material-icons">done</i>
+                                    <label>List</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="pretty p-icon p-jelly p-round p-bigger">
+                                {{ Form::checkbox('permission[passenger-create]', 'passenger-create') }}
+                                <div class="state p-info">
+                                    <i class="icon material-icons">done</i>
+                                    <label>Create</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="pretty p-icon p-jelly p-round p-bigger">
+                                {{ Form::checkbox('permission[passenger-edit]', 'passenger-edit') }}
+                                <div class="state p-info">
+                                    <i class="icon material-icons">done</i>
+                                    <label>Edit</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="pretty p-icon p-jelly p-round p-bigger">
+                                {{ Form::checkbox('permission[passenger-delete]', 'passenger-delete') }}
+                                <div class="state p-info">
+                                    <i class="icon material-icons">done</i>
+                                    <label>Delete</label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
 

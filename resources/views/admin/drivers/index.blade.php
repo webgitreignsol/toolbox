@@ -1,15 +1,14 @@
 @extends('admin.layouts.master')
+
+
 @section('content')
-@php
-$i = 1;
-@endphp
 <section class="section">
     <div class="section-body">
         <div class="row">
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h4>Rides Lists</h4>
+                <h4>Drivers Lists</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -17,56 +16,39 @@ $i = 1;
                     <thead>
                       <tr>
                         <th>No</th>
-                        <th>Passenger</th>
-                        <th>Driver</th>
-                        <th>Drop Off</th>
-                        <th>Pick Up</th>
-                        <th>Time</th>
-                        <th>Ride Type</th>
-                        <th>Fare</th>
-                        <th>Status</th>
-                        <th>Actio n</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach ($rides as $ride)                     
+                      @foreach ($users as $key => $user)
                       <tr>
-                        <td>{{$i++}}</td>
-
-                        <td>{{ $ride->user->name }}</td>
-                        <td>{{ $ride->user->name }}</td>
-                        <td>{{ $ride->drop_off }}</td>
-                        <td>{{ $ride->pick_up }}</td>
-                        <td>{{ $ride->time }}</td>
-                        <td>@if($ride->type == 0)
-                         Shared 
-                         @else 
-                         Private 
-                         @endif</td>
-                        <td>{{ $ride->fare }}</td>
-                        <td>@if($ride->status == 0 )
-                            Completed 
-                            @elseif($ride->status == 1 )
-                             Cancelled
-                            @else
-                             Active   
-                            @endif 
-                        </td>                                        
+                        <td>{{ $key + 1 }}</td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
                         <td>
-                            <a href="{{ route('rides.view', $ride->id) }}" class="btn btn-primary">View </a>
-                            <!-- @can('user-edit')
-                               <a class="btn btn-primary" href="{{ route('users.edit',$ride->id) }}">Edit</a>
+                            @if(!empty($user->getRoleNames()))
+                                @foreach($user->getRoleNames() as $v)
+                                   <label class="badge badge-success">{{ $v }}</label>
+                                @endforeach
+                            @endif
+                        </td>
+                        <td>
+                            @can('driver-edit')
+                               <a class="btn btn-primary" href="{{ route('drivers.edit',$user->id) }}">Edit</a>
                             @endcan
-                            @can('user-delete')
-                            <button class="btn btn-danger" type="button" onclick="deleteItem({{ $ride->id }})">
+                            @can('driver-delete')
+                            <button class="btn btn-danger" type="button" onclick="deleteItem({{ $user->id }})">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </button>
-                            <form id="delete-form-{{ $ride->id }}" action="{{ route('users.destroy', $ride->id) }}" method="post"
+                            <form id="delete-form-{{ $user->id }}" action="{{ route('drivers.destroy', $user->id) }}" method="post"
                                   style="display:none;">
                                 @csrf
                                 @method('DELETE')
                             </form>
-                            @endcan -->
+                            @endcan
                         </td>
                       </tr>
                       @endforeach

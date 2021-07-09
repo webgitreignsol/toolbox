@@ -4,25 +4,25 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Admin Dashboard | Master reignsol</title>
+  <title>Admin Dashboard | Will Go Transportation</title>
 
   <!-- General CSS Files index -->
-  <link rel="stylesheet" href="{{ asset('assets/admin/css/app.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('public/assets/admin/css/app.min.css') }}">
   <!-- General CSS Files create-post -->
-  <link rel="stylesheet" href="{{ asset('assets/admin/bundles/summernote/summernote-bs4.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/admin/bundles/jquery-selectric/selectric.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/admin/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}">
+  <link rel="stylesheet" href="{{ asset('public/assets/admin/bundles/summernote/summernote-bs4.css') }}">
+  <link rel="stylesheet" href="{{ asset('public/assets/admin/bundles/jquery-selectric/selectric.css') }}">
+  <link rel="stylesheet" href="{{ asset('public/assets/admin/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}">
   <!-- General CSS Files datatables -->
-  <link rel="stylesheet" href="{{ asset('assets/admin/bundles/datatables/datatables.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/admin/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('public/assets/admin/bundles/datatables/datatables.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('public/assets/admin/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
   <!-- Template CSS -->
-  <link rel="stylesheet" href="{{ asset('assets/admin/css/style.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/admin/css/components.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/admin/bundles/pretty-checkbox/pretty-checkbox.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('public/assets/admin/css/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('public/assets/admin/css/components.css') }}">
+  <link rel="stylesheet" href="{{ asset('public/assets/admin/bundles/pretty-checkbox/pretty-checkbox.min.css') }}">
   <!-- Custom style CSS -->
-  <link rel="stylesheet" href="{{ asset('assets/admin/css/custom.css') }}">
-  <link rel='shortcut icon' type='image/x-icon' href="{{ asset('assets/admin/img/favicon.ico') }}">
-  <link rel="stylesheet" href="{{ asset('assets/admin/backend/css/toastr.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('public/assets/admin/css/custom.css') }}">
+  <link rel='shortcut icon' type='image/x-icon' href="{{ asset('public/assets/admin/img/favicon.ico') }}">
+  <link rel="stylesheet" href="{{ asset('public/assets/admin/backend/css/toastr.min.css') }}">
 </head>
 
 <body>
@@ -64,14 +64,14 @@
               </div>
               <div class="dropdown-list-content dropdown-list-message">
                 <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar
-                      text-white"> <img alt="image" src="{{ asset('assets/admin/img/users/user-1.png') }}" class="rounded-circle">
+                      text-white"> <img alt="image" src="{{ asset('public/assets/admin/img/users/user-1.png') }}" class="rounded-circle">
                   </span> <span class="dropdown-item-desc"> <span class="message-user">John
                       Deo</span>
                     <span class="time messege-text">Please check your mail !!</span>
                     <span class="time">2 Min Ago</span>
                   </span>
                 </a> <a href="#" class="dropdown-item"> <span class="dropdown-item-avatar text-white">
-                    <img alt="image" src="{{ asset('assets/admin/img/users/user-2.png') }}" class="rounded-circle">
+                    <img alt="image" src="{{ asset('public/assets/admin/img/users/user-2.png') }}" class="rounded-circle">
                   </span> <span class="dropdown-item-desc"> <span class="message-user">Sarah
                       Smith</span> <span class="time messege-text">Request for leave
                       application</span>
@@ -116,7 +116,7 @@
             </div>
           </li>
           <li class="dropdown"><a href="#" data-toggle="dropdown"
-              class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="{{ asset('assets/admin/img/user.png') }}"
+              class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="{{ asset('public/assets/admin/img/user.png') }}"
                 class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
               <div class="dropdown-title"><b>{{ Auth::user()->name }}</b></div>
@@ -138,8 +138,8 @@
       <div class="main-sidebar sidebar-style-2">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="#"> <img alt="image" src="{{ asset('assets/admin/img/logo.png') }}" class="header-logo" /> <span
-                class="logo-name">Master</span>
+            <a href="#"> <img alt="image" src="{{ asset('public/assets/admin/img/logo.png') }}" class="header-logo" /> <span
+                class="logo-name">WillGo</span>
             </a>
           </div>
           <ul class="sidebar-menu">
@@ -191,7 +191,44 @@
               </ul>
             </li>
             @endif
-            
+            @if(Gate::check('driver-list') || Gate::check('driver-create'))
+              <li class="dropdown {{ Request::is('admin/drivers', 'admin/drivers/create') ? 'active' : '' }}">
+                  <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="user-check"></i><span>Drivers</span></a>
+                  <ul class="dropdown-menu">
+                      @can('driver-list')
+                          <li class="{{ Request::is('admin/drivers') ? 'active' : '' }}"><a class="nav-link" href="{{ route('drivers.index') }}">All Drivers</a></li>
+                      @endcan
+                      @can('driver-create')
+                          <li class="{{ Request::is('admin/drivers/create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('drivers.create') }}">Add Driver</a></li>
+                      @endcan
+                  </ul>
+              </li>
+            @endif
+
+            @if(Gate::check('passenger-list') || Gate::check('passenger-create'))
+              <li class="dropdown {{ Request::is('admin/passengers', 'admin/passengers/create') ? 'active' : '' }}">
+                  <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="user-check"></i><span>Passengers</span></a>
+                  <ul class="dropdown-menu">
+                      @can('passenger-list')
+                          <li class="{{ Request::is('admin/passengers') ? 'active' : '' }}"><a class="nav-link" href="{{ route('passengers.index') }}">All Passengers</a></li>
+                      @endcan
+                      @can('passenger-create')
+                          <li class="{{ Request::is('admin/passengers/create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('passengers.create') }}">Add Passenger</a></li>
+                      @endcan
+                  </ul>
+              </li>
+            @endif
+             @if(Gate::check('ride-list'))
+              <li class="dropdown {{ Request::is('admin/rides') ? 'active' : '' }}">
+                  <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="truck"></i><span>Rides Management</span></a>
+                  <ul class="dropdown-menu">
+                      @can('ride-list')
+                          <li class="{{ Request::is('admin/rides') ? 'active' : '' }}"><a class="nav-link" href="{{ route('rides.index') }}">All Rides</a></li>
+                      @endcan
+                     
+                  </ul>
+              </li>
+            @endif
           </ul>
         </aside>
       </div>
@@ -211,29 +248,29 @@
     </div>
   </div>
   <!-- General JS Scripts -->
-  <script src="{{ asset('assets/admin/js/app.min.js') }}"></script>
+  <script src="{{ asset('public/assets/admin/js/app.min.js') }}"></script>
   <!-- JS Libraies index-->
-  <script src="{{ asset('assets/admin/bundles/apexcharts/apexcharts.min.js') }}"></script>
+  <script src="{{ asset('public/assets/admin/bundles/apexcharts/apexcharts.min.js') }}"></script>
   <!-- JS Libraies create-post-->
-  <script src="{{ asset('assets/admin/bundles/summernote/summernote-bs4.js') }}"></script>
-  <script src="{{ asset('assets/admin/bundles/jquery-selectric/jquery.selectric.min.js') }}"></script>
-  <script src="{{ asset('assets/admin/bundles/upload-preview/assets/js/jquery.uploadPreview.min.js') }}"></script>
-  <script src="{{ asset('assets/admin/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script>
+  <script src="{{ asset('public/assets/admin/bundles/summernote/summernote-bs4.js') }}"></script>
+  <script src="{{ asset('public/assets/admin/bundles/jquery-selectric/jquery.selectric.min.js') }}"></script>
+  <script src="{{ asset('public/assets/admin/bundles/upload-preview/assets/js/jquery.uploadPreview.min.js') }}"></script>
+  <script src="{{ asset('public/assets/admin/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script>
   <!-- JS Libraies datatables -->
-  <script src="{{ asset('assets/admin/bundles/datatables/datatables.min.js') }}"></script>
-  <script src="{{ asset('assets/admin/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
-  <script src="{{ asset('assets/admin/bundles/jquery-ui/jquery-ui.min.js') }}"></script>
+  <script src="{{ asset('public/assets/admin/bundles/datatables/datatables.min.js') }}"></script>
+  <script src="{{ asset('public/assets/admin/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
+  <script src="{{ asset('public/assets/admin/bundles/jquery-ui/jquery-ui.min.js') }}"></script>
   <!-- Page Specific JS File index -->
-  <script src="{{ asset('assets/admin/js/page/index.js') }}"></script>
+  <script src="{{ asset('public/assets/admin/js/page/index.js') }}"></script>
   <!-- Page Specific JS File create-post -->
-  <script src="{{ asset('assets/admin/js/page/create-post.js') }}"></script>
+  <script src="{{ asset('public/assets/admin/js/page/create-post.js') }}"></script>
   <!-- Page Specific JS File datatables -->
-  <script src="{{ asset('assets/admin/js/page/datatables.js') }}"></script>
+  <script src="{{ asset('public/assets/admin/js/page/datatables.js') }}"></script>
   <!-- Template JS File -->
-  <script src="{{ asset('assets/admin/js/scripts.js') }}"></script>
+  <script src="{{ asset('public/assets/admin/js/scripts.js') }}"></script>
   <!-- Custom JS File -->
-  <script src="{{ asset('assets/admin/js/custom.js') }}"></script>
-  <script src="{{ asset('assets/admin/backend/js/toastr.min.js') }}"></script>
+  <script src="{{ asset('public/assets/admin/js/custom.js') }}"></script>
+  <script src="{{ asset('public/assets/admin/backend/js/toastr.min.js') }}"></script>
   {!! Toastr::message() !!}
 
   <script>

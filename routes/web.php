@@ -42,7 +42,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
         Route::get('users/{id}/view', 'UserController@view')->name('users.view');
 		Route::put('users/{id}', 'UserController@update')->name('users.update')->middleware('permission:user-edit');
 		Route::any('users/{id}/destroy', 'UserController@destroy')->name('users.destroy')->middleware('permission:user-delete');
-	});
+	});	
 
 	Route::group(['namespace' => 'Passenger'], function (){
         Route::get('passengers', 'PassengerController@index')->name('passengers.index')->middleware('permission:passenger-list');
@@ -72,7 +72,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
 	});
 
 	Route::group(['namespace' => 'Rides'], function (){
-		Route::get('rides', 'IndexController@index')->name('permissions.index')->middleware('permission:permission-list');
+		Route::get('rides', 'IndexController@index')->name('rides.index')->middleware('permission:permission-list');
+		Route::get('rides/{id}', 'IndexController@view')->name('rides.view')->middleware('permission:permission-list');
 	});
+	
+
 
 });
