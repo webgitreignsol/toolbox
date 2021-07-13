@@ -25,35 +25,35 @@ $i = 1;
                         <th>Ride Type</th>
                         <th>Fare</th>
                         <th>Status</th>
-                        <th>Actio n</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach ($rides as $ride)                     
+                      @foreach ($rides as $ride)
                       <tr>
                         <td>{{$i++}}</td>
-                        <td>{{ $ride->user->name }}</td>
-                        <td>{{ $ride->user->name }}</td>
+                        <td>{{ $ride->passenger->name }}</td>
+                        <td>{{ $ride->driver->name }}</td>
                         <td>{{ $ride->drop_off }}</td>
                         <td>{{ $ride->pick_up }}</td>
                         <td>{{ $ride->time }}</td>
                         <td>@if($ride->type == 0)
-                            Shared 
-                            @else 
-                            Private 
+                            Shared
+                            @else
+                            Private
                             @endif
                         </td>
                         <td>{{ $ride->fare }}</td>
                         <td>@if($ride->status == 0 )
-                            Accepted 
+                            Accepted
                             @elseif($ride->status == 1 )
                             Completed
                             @else
-                            Accepted   
-                            @endif 
-                        </td>                                        
+                            Accepted
+                            @endif
+                        </td>
                         <td>
-                            <a href="#" class="btn btn-primary">View </a>                           
+                            <a href="{{ route('rides.view', $ride->id) }}" class="btn btn-primary">View </a>
                         </td>
                       </tr>
                       @endforeach
