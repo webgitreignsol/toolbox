@@ -32,8 +32,8 @@ $i = 1;
                       @foreach ($rides as $ride)                     
                       <tr>
                         <td>{{$i++}}</td>
-                        <td>{{ $ride->user->name }}</td>
-                        <td>{{ $ride->user->name }}</td>
+                        <td>{{ $ride->passenger->name }}</td>
+                        <td>{{ $ride->driver->name }}</td>
                         <td>{{ $ride->drop_off }}</td>
                         <td>{{ $ride->pick_up }}</td>
                         <td>{{ $ride->time }}</td>
