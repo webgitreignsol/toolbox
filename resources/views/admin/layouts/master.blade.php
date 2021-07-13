@@ -121,10 +121,10 @@
             <div class="dropdown-menu dropdown-menu-right pullDown">
               <div class="dropdown-title"><b>{{ Auth::user()->name }}</b></div>
               <div class="dropdown-divider"></div>
-              <a href="{{ route('logout') }}" 
+              <a href="{{ route('logout') }}"
                  onclick="event.preventDefault();
-                 document.getElementById('logout-form').submit();" 
-                 class="dropdown-item has-icon text-danger"> 
+                 document.getElementById('logout-form').submit();"
+                 class="dropdown-item has-icon text-danger">
                  <i class="fas fa-sign-out-alt"></i>
                   Logout
               </a>
@@ -147,9 +147,9 @@
 
             <li >
               <a href="{{ route('dashboard') }}" ><i data-feather="monitor"></i><span>Dashboard</span></a>
-              
+
             </li>
-            
+
             @if(Gate::check('role-list') || Gate::check('role-create'))
             <li class="dropdown {{ Request::is('admin/roles', 'admin/roles/create') ? 'active' : '' }}">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="anchor"></i><span>Roles</span></a>
@@ -233,10 +233,18 @@
                       @endcan
                       @can('ride-list')
                           <li class="{{ Request::is('admin/rides/cancelled') ? 'active' : '' }}"><a class="nav-link" href="{{ route('rides.cancelled') }}">Cancelled Rides</a></li>
-                      @endcan                     
+                      @endcan
                   </ul>
               </li>
             @endif
+              @if(Gate::check('setting-list'))
+                  <li class="dropdown {{ Request::is('admin/fare', 'admin/passengers/create') ? 'active' : '' }}">
+                      <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="user-check"></i><span>Settings</span></a>
+                      <ul class="dropdown-menu">
+                              <li class="{{ Request::is('admin/fare') ? 'active' : '' }}"><a class="nav-link" href="{{ route('fare.edit') }}">Fare Management</a></li>
+                      </ul>
+                  </li>
+              @endif
           </ul>
         </aside>
       </div>

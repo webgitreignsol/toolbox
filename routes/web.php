@@ -14,18 +14,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 	Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
-	
+
 	Auth::routes();
 	Route::get('/', function () { return redirect('/dashboard');
 	});
-	
+
 
 	Route::group(['namespace' => 'Dashboard', 'prefix' => 'dashboard', 'middleware' => ['auth']], function (){
-		Route::get('/', 'DashboardController@index')->name('dashboard');		
-	});	
+		Route::get('/', 'DashboardController@index')->name('dashboard');
+	});
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth']], function(){
-	
+
 	Route::group(['namespace' => 'Role'], function (){
 		Route::get('roles', 'RoleController@index')->name('roles.index')->middleware('permission:role-list');
 		Route::get('roles/create', 'RoleController@create')->name('roles.create')->middleware('permission:role-create');
@@ -43,7 +43,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
         Route::get('users/{id}/view', 'UserController@view')->name('users.view');
 		Route::put('users/{id}', 'UserController@update')->name('users.update')->middleware('permission:user-edit');
 		Route::any('users/{id}/destroy', 'UserController@destroy')->name('users.destroy')->middleware('permission:user-delete');
-	});	
+	});
 
 	Route::group(['namespace' => 'Passenger'], function (){
         Route::get('passengers', 'PassengerController@index')->name('passengers.index')->middleware('permission:passenger-list');
@@ -79,4 +79,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
 		Route::get('rides/cancelled', 'IndexController@cancelled')->name('rides.cancelled')->middleware('permission:ride-list');
 		Route::get('rides/{id}', 'IndexController@view')->name('rides.view')->middleware('permission:ride-list');
 	});
+
+    Route::group(['namespace' => 'Fares'], function (){
+        Route::put('fare/{id}', 'FareController@update')->name('fare.update');
+        Route::get('fare/', 'FareController@edit')->name('fare.edit');
+    });
+
 });

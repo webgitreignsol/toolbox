@@ -8,7 +8,7 @@
                             <div class="col-lg-12">
                                 <div class="invoice-title">
                                     <h2>Ride Detail</h2>
-{{--                                    <div class="invoice-number">Order #12345</div>--}}
+                                    <div class="invoice-number">Order #12345</div>
                                 </div>
                                 <hr>
                                 <div class="row">
