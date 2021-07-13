@@ -219,20 +219,27 @@
               </li>
             @endif
              @if(Gate::check('ride-list'))
-              <li class="dropdown {{ Request::is('admin/rides') ? 'active' : '' }}">
+              <li class="dropdown {{ Request::is('admin/rides','admin/rides/accepted', 'admin/rides/completed', 'admin/rides/cancelled') ? 'active' : '' }}">
                   <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="truck"></i><span>Rides Management</span></a>
                   <ul class="dropdown-menu">
                       @can('ride-list')
                           <li class="{{ Request::is('admin/rides') ? 'active' : '' }}"><a class="nav-link" href="{{ route('rides.index') }}">All Rides</a></li>
                       @endcan
-                     
+                      @can('ride-list')
+                          <li class="{{ Request::is('admin/rides/accepted') ? 'active' : '' }}"><a class="nav-link" href="{{ route('rides.accepted') }}">Accepted Rides</a></li>
+                      @endcan
+                      @can('ride-list')
+                          <li class="{{ Request::is('admin/rides/completed') ? 'active' : '' }}"><a class="nav-link" href="{{ route('rides.completed') }}">Completed Rides</a></li>
+                      @endcan
+                      @can('ride-list')
+                          <li class="{{ Request::is('admin/rides/cancelled') ? 'active' : '' }}"><a class="nav-link" href="{{ route('rides.cancelled') }}">Cancelled Rides</a></li>
+                      @endcan                     
                   </ul>
               </li>
             @endif
           </ul>
         </aside>
       </div>
-
       <!-- Main Content -->
       <div class="main-content">
         @yield('content')

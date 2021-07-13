@@ -13,11 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-	Route::get('/', function () { return redirect('/home');	});
-
-Auth::routes();
-
-	Route::get('/home', function () { return redirect('/dashboard');});
+	Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
+	
+	Auth::routes();
+	Route::get('/', function () { return redirect('/dashboard');
+	});
+	
 
 	Route::group(['namespace' => 'Dashboard', 'prefix' => 'dashboard', 'middleware' => ['auth']], function (){
 		Route::get('/', 'DashboardController@index')->name('dashboard');		
@@ -72,10 +73,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
 	});
 
 	Route::group(['namespace' => 'Rides'], function (){
-		Route::get('rides', 'IndexController@index')->name('rides.index')->middleware('permission:permission-list');
-		Route::get('rides/{id}', 'IndexController@view')->name('rides.view')->middleware('permission:permission-list');
+		Route::get('rides', 'IndexController@index')->name('rides.index')->middleware('permission:ride-list');
+		Route::get('rides/accepted', 'IndexController@accepted')->name('rides.accepted')->middleware('permission:ride-list');
+		Route::get('rides/completed', 'IndexController@completed')->name('rides.completed')->middleware('permission:ride-list');
+		Route::get('rides/cancelled', 'IndexController@cancelled')->name('rides.cancelled')->middleware('permission:ride-list');
+		Route::get('rides/{id}', 'IndexController@view')->name('rides.view')->middleware('permission:ride-list');
 	});
-	
-
-
 });
