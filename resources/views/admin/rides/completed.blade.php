@@ -25,7 +25,7 @@ $i = 1;
                         <th>Ride Type</th>
                         <th>Fare</th>
                         <th>Status</th>
-                        <th>Actio n</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
