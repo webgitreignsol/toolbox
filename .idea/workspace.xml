@@ -3,9 +3,16 @@
   <component name="ChangeListManager">
     <list default="true" id="a23d6c7c-a42a-42b2-b998-8ad1ffa5244f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Fares/FareController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Fares/FareController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/cache/packages.php" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/cache/packages.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap/cache/services.php" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap/cache/services.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/fare/createUpdate.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/fare/createUpdate.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/rides/accepted.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/rides/accepted.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/rides/completed.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/rides/completed.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/rides/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/rides/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/rides/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/rides/view.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/roles/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/roles/create.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -245,6 +245,7 @@
                                     {{ Form::checkbox('permission[setting-list]', 'setting-list') }}
                                     <div class="state p-info">
                                         <i class="icon material-icons">done</i>
+
                                         <label>List</label>
                                     </div>
                                 </div>

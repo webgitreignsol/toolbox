@@ -6,17 +6,18 @@
         <div class="col-md-12">
             <div class="row">
             <div class="col-md-7">
-            <div class="sidenav" style="background-image: url('{{ asset('/public/assets/admin/img/img.jpg') }}')!important; background-repeat: no-repeat; background-size: cover;">
+            <div class="sidenav" style="background-image: url('{{ asset('/public/assets/admin/img/teen-driver.jpg') }}')!important; background-repeat: no-repeat; background-size: cover;">
             </div>
             </div>
-         
+
                 <div class="col-md-5">
-                    <div class="login-form" style="margin-left: 20px;">
+                    <div class="login-form" style="margin-left: 130px;">
+                        <h2 style="margin-left: 70px;">Welcome Back!</h2>
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="form-group">
                                 <label>Email</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" autofocus>
+                                <input style="color: black;" id="email" type="email" class="input100 @error('email') is-invalid @enderror" placeholder="Type Your Email" name="email" value="{{ old('email') }}" autocomplete="email" autofocus>
 
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -26,7 +27,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="current-password">
+                                <input style="color: black;" id="password" type="password" class="input100 @error('password') is-invalid @enderror" placeholder="Type Your Password" name="password" autocomplete="current-password">
 
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
@@ -34,11 +35,11 @@
                                     </span>
                                 @enderror
                             </div>
-                            <button type="submit" class="btn btn-black">Login</button>
+                            <button type="submit" class="login100-form-btn">Login</button>
                         </form>
                     </div>
                 </div>
-            
+
 
         </div>
           </div>
@@ -94,7 +95,7 @@
             .login-form{
                 margin-top: 0%;
                 width: 60%;
-                margin: 17rem;
+                margin: 100px;
             }
 
             .register-form{
@@ -113,7 +114,38 @@
 
         .btn-black{
             background-color: #0a568c !important;
-            color: #fff;
+            color: #fff !important;
             float: right;
+        }
+        .login100-form-btn {
+            background-color: #0a568c !important;
+            font-family: Poppins-Medium;
+            font-size: 16px;
+            color: #fff;
+            line-height: 1.2;
+            text-transform: uppercase;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+            width: 100%;
+            height: 50px;
+            border-radius: 10px;
+        }
+
+        .input100 {
+            font-family: Poppins-Medium;
+            font-size: 16px;
+            color: #0000;
+            line-height: 1.2;
+            display: block;
+            width: 100%;
+            height: 55px;
+            background: transparent;
+            padding: 0 7px 0 43px;
         }
     </style>
