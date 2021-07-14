@@ -250,6 +250,18 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr>
+                            <td>Reports</td>
+                            <td>
+                                <div class="pretty p-icon p-jelly p-round p-bigger">
+                                    {{ Form::checkbox('permission[reports-list]', 'report-list', $role->hasPermissionTo('report-list')) }}
+                                    <div class="state p-info">
+                                        <i class="icon material-icons">done</i>
+                                        <label>List</label>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
 

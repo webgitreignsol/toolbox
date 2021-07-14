@@ -23,6 +23,9 @@
   <link rel="stylesheet" href="{{ asset('public/assets/admin/css/custom.css') }}">
   <link rel='shortcut icon' type='image/x-icon' href="{{ asset('public/assets/admin/img/favicon.ico') }}">
   <link rel="stylesheet" href="{{ asset('public/assets/admin/backend/css/toastr.min.css') }}">
+  <!-- datetimepicker -->
+  <link rel="stylesheet" href="{{ asset('public/assets/admin/bundles/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('public/assets/admin/bundles/bootstrap-daterangepicker/daterangepicker.css')}}">
 </head>
 
 <body>
@@ -237,9 +240,17 @@
                   </ul>
               </li>
             @endif
+             @if(Gate::check('report-list'))
+                  <li class="dropdown {{ Request::is('admin/reports/rides') ? 'active' : '' }}">
+                      <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="book"></i><span>Reports</span></a>
+                      <ul class="dropdown-menu">
+                              <li class="{{ Request::is('admin/reports.rides') ? 'active' : '' }}"><a class="nav-link" href="{{ route('reports.index') }}">Rides & Revenue</a></li>
+                      </ul>
+                  </li>
+              @endif
               @if(Gate::check('setting-list'))
                   <li class="dropdown {{ Request::is('admin/fare', 'admin/passengers/create') ? 'active' : '' }}">
-                      <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="user-check"></i><span>Settings</span></a>
+                      <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="settings"></i><span>Settings</span></a>
                       <ul class="dropdown-menu">
                               <li class="{{ Request::is('admin/fare') ? 'active' : '' }}"><a class="nav-link" href="{{ route('fare.edit') }}">Fare Management</a></li>
                       </ul>
@@ -286,6 +297,9 @@
   <!-- Custom JS File -->
   <script src="{{ asset('public/assets/admin/js/custom.js') }}"></script>
   <script src="{{ asset('public/assets/admin/backend/js/toastr.min.js') }}"></script>
+  <!-- datetimpepicker -->
+   <script src="{{ asset('public/assets/admin/bundles/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>
+  <script src="{{ asset('public/assets/admin/bundles/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
   {!! Toastr::message() !!}
 
   <script>

@@ -21,6 +21,7 @@ class User extends Authenticatable
     use HasRoles;
     use HasApiTokens;
     use LogsActivity;
+    
 
     protected $guard = 'api';
 
