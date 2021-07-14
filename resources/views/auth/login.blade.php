@@ -12,12 +12,12 @@
 
                 <div class="col-md-5">
                     <div class="login-form" style="margin-left: 130px;">
-                        <h2 style="margin-left: 70px;">Welcome Back!</h2>
+                        <h2 style="margin-left: 70px; color: #fff;">Welcome Back!</h2>
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="form-group">
-                                <label>Email</label>
-                                <input style="color: black;" id="email" type="email" class="input100 @error('email') is-invalid @enderror" placeholder="Type Your Email" name="email" value="{{ old('email') }}" autocomplete="email" autofocus>
+                                <label style="color: #fff;">Email</label>
+                                <input style="color: black;" id="email" type="email" class="input100 form-control @error('email') is-invalid @enderror" placeholder="Type Your Email" name="email" value="{{ old('email') }}" autocomplete="email" autofocus>
 
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -26,8 +26,8 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Password</label>
-                                <input style="color: black;" id="password" type="password" class="input100 @error('password') is-invalid @enderror" placeholder="Type Your Password" name="password" autocomplete="current-password">
+                                <label style="color: #fff;">Password</label>
+                                <input style="color: black;" id="password" type="password" class="input100 form-control @error('password') is-invalid @enderror" placeholder="Type Your Password" name="password" autocomplete="current-password">
 
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
@@ -95,7 +95,7 @@
             .login-form{
                 margin-top: 0%;
                 width: 60%;
-                margin: 100px;
+                margin: 180px 0px 0px 180px;
             }
 
             .register-form{
