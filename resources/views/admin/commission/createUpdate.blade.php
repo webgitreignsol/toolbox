@@ -7,23 +7,23 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            Update Miles , Minutes And Commission
+                            Update Commission
                         </div>
-                        {!! Form::model($fare, ['method' => 'PUT','route' => ['fare.update', $fare->id]]) !!}
+                        {!! Form::model($commission, ['method' => 'PUT','route' => ['commission.update', $commission->id]]) !!}
                         <div class="card-body">
                             <div class="form-group row mb-4">
-                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Per Mile</label>
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Value</label>
                                 <div class="col-sm-12 col-md-7">
-                                    {!! Form::text('per_mile', null, array('placeholder' => 'Per Mile','class' => 'form-control')) !!}
+                                    {!! Form::text('value', null, array('placeholder' => 'Value','class' => 'form-control')) !!}
                                 </div>
                                 Last Modified
                                 <br>
-                                {{ (!empty($fare->updated_at)) ? $fare->updated_at : '- -' }}
+                                {{ (!empty($commission->updated_at)) ? $commission->updated_at : '- -' }}
                             </div>
                             <div class="form-group row mb-4">
-                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Per Minute</label>
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Type</label>
                                 <div class="col-sm-12 col-md-7">
-                                    {!! Form::text('per_minute', null, array('placeholder' => 'Per Minute','class' => 'form-control')) !!}
+                                    {!! Form::text('percent', null, array('placeholder' => 'Type','class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="form-group row mb-4">

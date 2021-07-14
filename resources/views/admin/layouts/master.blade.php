@@ -252,7 +252,8 @@
                   <li class="dropdown {{ Request::is('admin/fare', 'admin/passengers/create') ? 'active' : '' }}">
                       <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="settings"></i><span>Settings</span></a>
                       <ul class="dropdown-menu">
-                              <li class="{{ Request::is('admin/fare') ? 'active' : '' }}"><a class="nav-link" href="{{ route('fare.edit') }}">Fare Management</a></li>
+                          <li class="{{ Request::is('admin/fare') ? 'active' : '' }}"><a class="nav-link" href="{{ route('fare.edit') }}">Fare Management</a></li>
+                          <li class="{{ Request::is('admin/commission') ? 'active' : '' }}"><a class="nav-link" href="{{ route('commission.edit') }}">Commission Management</a></li>
                       </ul>
                   </li>
               @endif

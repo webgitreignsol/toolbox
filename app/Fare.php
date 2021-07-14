@@ -7,6 +7,6 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Fare extends Model
 {
 	use LogsActivity;
-	
-    protected $fillable = ['per_mile', 'per_minute','willgo_commission'];
+
+    protected $fillable = ['per_mile', 'per_minute'];
 }

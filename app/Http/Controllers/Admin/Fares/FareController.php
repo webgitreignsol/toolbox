@@ -22,7 +22,6 @@ class FareController extends Controller
         $this->validate($request, [
             'per_mile' => 'required',
             'per_minute' => 'required',
-            'willgo_commission' => 'required'
         ]);
 
         $input = $request->all();

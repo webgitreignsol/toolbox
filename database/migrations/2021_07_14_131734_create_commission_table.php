@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFaresTable extends Migration
+class CreateCommissionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,18 @@ class CreateFaresTable extends Migration
      */
     public function up()
     {
-        Schema::create('fares', function (Blueprint $table) {
+        Schema::create('commission', function (Blueprint $table) {
             $table->id();
-            $table->integer('per_mile');
-            $table->integer('per_minute');
+            $table->string('value');
+            $table->string('percent');
             $table->timestamps();
         });
 
-        DB::table('fares')->insert(
+        DB::table('commission')->insert(
             array(
                 'id' => 1,
-                'per_mile' => 1,
-                'per_minute' => 1,
+                'value' => 1,
+                'percent' => '%',
             )
         );
     }
@@ -36,6 +36,6 @@ class CreateFaresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fares');
+        Schema::dropIfExists('commission');
     }
 }

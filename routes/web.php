@@ -85,8 +85,13 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
         Route::get('fare/', 'FareController@edit')->name('fare.edit');
     });
 
+    Route::group(['namespace' => 'Commission'], function (){
+        Route::put('commission/{id}', 'CommissionController@update')->name('commission.update');
+        Route::get('commission/', 'CommissionController@edit')->name('commission.edit');
+    });
+
     Route::group(['namespace' => 'Orders'], function (){
-		Route::get('reports/rides', 'OrderController@index')->name('reports.index')->middleware('permission:report-list');		
+		Route::get('reports/rides', 'OrderController@index')->name('reports.index')->middleware('permission:report-list');
 		Route::post('reports/search', 'OrderController@search')->name('reports.search')->middleware('permission:report-list');
 	});
 
