@@ -13,3 +13,22 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+
+Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
+
+	Route::group(['prefix' => 'auth'], function() {		
+
+
+	});
+
+	Route::group(['namespace' => 'Vendor', 'prefix' => 'vendors', 'middleware' => 'auth:api'], function() {
+		
+	});
+
+	Route::group(['namespace' => 'Customer', 'prefix' => 'customer', 'middleware' => 'auth:api'], function() {
+		
+
+	});
+
+});

@@ -204,6 +204,9 @@
                       @can('driver-create')
                           <li class="{{ Request::is('admin/drivers/create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('drivers.create') }}">Add Driver</a></li>
                       @endcan
+                      @can('driver-list')
+                          <li class="{{ Request::is('admin/drivers/session') ? 'active' : '' }}"><a class="nav-link" href="{{ route('drivers.session') }}">All Sessions</a></li>
+                      @endcan
                   </ul>
               </li>
             @endif

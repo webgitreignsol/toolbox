@@ -61,6 +61,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
         Route::get('drivers/{id}/edit', 'DriverController@edit')->name('drivers.edit')->middleware('permission:driver-edit');
         Route::put('drivers/{id}', 'DriverController@update')->name('drivers.update')->middleware('permission:driver-edit');
         Route::any('drivers/{id}/destroy', 'DriverController@destroy')->name('drivers.destroy')->middleware('permission:driver-delete');
+        Route::any('drivers/session', 'SessionController@index')->name('drivers.session')->middleware('permission:driver-list');
+        Route::get('session/{id}/edit', 'SessionController@edit')->name('session.edit')->middleware('permission:driver-edit');
+        Route::post('session/{id}/update', 'SessionController@update')->name('session.update')->middleware('permission:driver-edit');
     });
 
 	Route::group(['namespace' => 'Permission'], function (){
