@@ -8,11 +8,12 @@ use App\Http\Resources\Frontend\User\GetProfile as GetUserProfile;
 use Laravel\Passport\HasApiTokens;
 use Validator;
 use App\User;
+use App\UserProfile;
 use Auth;
 
 class AuthController extends Controller
-{	
-     public function login(Request $request)
+{
+    public function login(Request $request)
     {
         if($request->has('email')) {
             $validationRules['email'] = 'required|string|email';
@@ -87,5 +88,70 @@ class AuthController extends Controller
         $user->token = 'Bearer ' . $tokenResult->accessToken;
         // $user->roles = $user->roles ?? [];
         return $user;
+    }
+
+    public function getProfile($id)
+    {
+        $user = User::with('user_profiles')->where('id',$id)->first();
+
+        if ($user) {
+            return response()->json(["status" => 1, "message" => 'User Match Succesfully', "data" => $user]);
+        } else {
+            return response()->json(["status" => 0, "message" => 'Undefined User', "data" => []]);
+        }
+
+    }
+
+    public function createProfile(Request $request)
+    {
+//        dd($request->all());
+        $rules=[
+            'location'   =>'required',
+            'image'      => 'required|image',
+            'bio'        => 'required'
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if($validator->fails()) {
+            return $validator;
+        }
+
+        $image = $request->image;
+        $image_name = rand().'.'. $image->getClientOriginalExtension();
+        $image->move(public_path('public/assets/admin/userImg/'), $image_name);
+
+        $profile = new UserProfile;
+
+        $profile->location = $request->location;
+        $profile->bio = $request->bio;
+        $profile->latitude = $request->latitude;
+        $profile->longitude = $request->longitude;
+        $profile->image = $image_name;
+        $profile->user_id = Auth::user();
+        dd($profile->user_id);
+        $profile->save();
+
+        if ($profile) {
+            return response()->json(["status" => 1, "message" => 'Profile Create Succesfully', "data" => []]);
+        }
+
+    }
+
+    public function signUp(Request $request){
+        $rules=[
+            'name'=>'required',
+            'email'=>'required|email',
+            'password'=>'required|min:6',
+            'phone'=>'required|min:11|max:17'
+        ];
+        $this->validate($request,$rules);
+        $user=new User();
+        $user->name=$request->name;
+        $user->email=$request->email;
+        $user->phone=$request->phone;
+        $user->password=bcrypt($request->password);
+        $user->save();
+        return response()->json(["status" => 1, "message" => 'Account Created Successfully', "data" => []]);
     }
 }

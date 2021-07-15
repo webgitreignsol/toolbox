@@ -36,7 +36,7 @@ $i = 1;
                <br>
                <br>
                <div class="row" style="margin:10px;">
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="card">
                 <div class="card-statistic-4">
                   <div class="align-items-center justify-content-between">
@@ -44,7 +44,7 @@ $i = 1;
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                         <div class="card-content">
                           <h5 class="font-15">Rides</h5>
-                          <h2 class="mb-3 font-18"> @if(isset($searchRide)) {{$searchRide}}@else {{$ride}}@endif</h2>                          
+                          <h2 class="mb-3 font-18"> @if(isset($searchRide)) {{$searchRide}}@else {{$ride}}@endif</h2>
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
@@ -66,7 +66,7 @@ $i = 1;
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                         <div class="card-content">
                           <h5 class="font-15">Passengers</h5>
-                          <h2 class="mb-3 font-18">@if(isset($searchOrder)) {{$searchOrder}}@else {{count($orders)}}@endif</h2>                         
+                          <h2 class="mb-3 font-18">@if(isset($searchOrder)) {{$searchOrder}}@else {{count($orders)}}@endif</h2>
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
@@ -87,7 +87,7 @@ $i = 1;
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                         <div class="card-content">
                           <h5 class="font-15">Total Sales</h5>
-                          <h2 class="mb-3 font-18">@if(isset($pluck)) {{$pluck}} @else {{$sum}} @endif</h2>                          
+                          <h2 class="mb-3 font-18">@if(isset($pluck)) {{$pluck}} @else {{$sum}} @endif</h2>
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
@@ -108,7 +108,7 @@ $i = 1;
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                         <div class="card-content">
                           <h5 class="font-15">Revenue</h5>
-                          <h2 class="mb-3 font-18">@if(isset($pluck)) {{ $pluck * $searchrevenue /100 }}   @else {{ $sum * $revenue /100 }} @endif</h2>                        
+                          <h2 class="mb-3 font-18">@if(isset($pluck)) {{ $pluck * $searchrevenue /100 }}   @else {{ $sum * $revenue /100 }} @endif</h2>
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
@@ -157,7 +157,7 @@ $i = 1;
                             <a href="#" class="btn btn-primary">View </a>
                         </td>
                       </tr>
-                      @endforeach  
+                      @endforeach
                       @else
                       @foreach ($orders as $order)
                       <tr>

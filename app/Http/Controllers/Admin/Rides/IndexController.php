@@ -18,7 +18,6 @@ class IndexController extends Controller
     public function accepted()
     {
     	$rides = Ride::where('status', 0)->paginate(10);
-
     	return view('admin.rides.accepted', compact('rides'));
     }
 
@@ -37,6 +36,6 @@ class IndexController extends Controller
     public function view($id)
     {
     	$ride = Ride::find($id);
-    	return view('admin.rides.view', compact('ride'));    
+    	return view('admin.rides.view', compact('ride'));
     }
 }
