@@ -111,15 +111,15 @@ class AuthController extends Controller
             'bio'        => 'required'
         ];
 
-        $validator = Validator::make($request->all(), $rules);
+        // $validator = Validator::make($request->all(), $rules);
 
-        if($validator->fails()) {
-            return $validator;
-        }
+        // if($validator->fails()) {
+        //     return $validator;
+        // }
 
-        $image = $request->image;
+        $image = $request->file('image');
         $image_name = rand().'.'. $image->getClientOriginalExtension();
-        $image->move(public_path('public/assets/admin/userImg/'), $image_name);
+        $image->move(public_path('assets/admin/userImg/'), $image_name);
 
         $profile = new UserProfile;
 
@@ -128,12 +128,11 @@ class AuthController extends Controller
         $profile->latitude = $request->latitude;
         $profile->longitude = $request->longitude;
         $profile->image = $image_name;
-        $profile->user_id = Auth::user();
-        dd($profile->user_id);
+        $profile->user_id = Auth::user()->id;
         $profile->save();
 
         if ($profile) {
-            return response()->json(["status" => 1, "message" => 'Profile Create Succesfully', "data" => []]);
+            return response()->json(["status" => 1, "message" => 'Profile Create Succesfully', "data" => $profile]);
         }
 
     }

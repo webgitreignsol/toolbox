@@ -20,8 +20,11 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
 	Route::group(['prefix' => 'auth'], function() {
         Route::post('login', 'AuthController@login');
         Route::post('sign-up', 'AuthController@signUp');
-        Route::post('create-profile', 'AuthController@createProfile');
+       
+    Route::group(['middleware' => 'auth:api'], function() {
+		Route::post('create/profile', 'AuthController@createProfile');
         Route::get('get-profile/{id}','AuthController@getProfile');
+		});    
 
 	});
 
