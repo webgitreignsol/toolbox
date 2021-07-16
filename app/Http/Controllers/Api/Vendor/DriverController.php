@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\DriverDetail;
 use Validator;
 use Auth;
+
 class DriverController extends Controller
 {
    public function index()
@@ -16,8 +17,15 @@ class DriverController extends Controller
    }
 
    public function store(Request $request)
-   {	
-   		$drimage = $request->file('driver_photo');
+   {
+    $validator = Validator::make($request->all(), DriverDetail::$rules);
+      
+      if ($validator->fails()) {
+    
+          return response()->json(['errors'=>$validator->errors()]);
+      }
+   		
+      $drimage = $request->file('driver_photo');
    		$crimage = $request->file('car_photo');	
 
    		$dr_img = rand().'.'. $drimage->getClientOriginalExtension();
@@ -29,31 +37,30 @@ class DriverController extends Controller
    		$auth_id = Auth::user()->id;
 
    		$arr = array(
-   			'driver_contact' 			=> $request->driver_contact,
-   			'driver_photo' 				=> $dr_img,
-   			'car_photo' 				=> $cr_img,
-   			'car_make' 					=> $request->car_make,
-   			'car_registration_number' 	=> $request->car_registration_number,
-   			'driver_id' 				=> Auth::user()->id
+   			'driver_contact' 			   => $request->driver_contact,
+   			'driver_photo' 				   => $dr_img,
+   			'car_photo' 				     => $cr_img,
+   			'car_make' 					     => $request->car_make,
+   			'car_registration_number'=> $request->car_registration_number,
+   			'driver_id' 				     => Auth::user()->id
    			);
-   		 $validator = Validator::make($arr, DriverDetail::$rules);
         
-        if ($validator->fails()) {
-    
-          return response()->json(['errors'=>$validator->errors()]);
-        }else{
-        	DriverDetail::where('driver_id', $auth_id)->update($arr);
+      	DriverDetail::where('driver_id', $auth_id)->update($arr);
 
-        	return response()->json([
-            'message' => 'Success',
-            'status' => 1,
-            'data' => $arr
-        ]);  
-        }
+      	return response()->json([
+          'message' => 'Success',
+          'status' => 1,
+          'data' => $arr
+        ]);         
    }
 
    public function update(Request $request)
    {
+      if ($validator->fails()) {
+    
+          return response()->json(['errors'=>$validator->errors()]);
+      }
+
    		$drimage = $request->file('driver_photo');
    		$crimage = $request->file('car_photo');	
 
@@ -66,28 +73,21 @@ class DriverController extends Controller
    		$auth_id = Auth::user()->id;   		
 
    		$arr = array(
-   			'driver_contact' 			=> $request->driver_contact,
-   			'driver_photo' 				=> $dr_img,
-   			'car_photo' 				=> $cr_img,
-   			'car_make' 					=> $request->car_make,
-   			'car_registration_number' 	=> $request->car_registration_number,
-   			'driver_id' 				=> $auth_id
+   			'driver_contact' 			    => $request->driver_contact,
+   			'driver_photo' 				    => $dr_img,
+   			'car_photo' 				      => $cr_img,
+   			'car_make' 					      => $request->car_make,
+   			'car_registration_number' => $request->car_registration_number,
+   			'driver_id' 				      => $auth_id
    			);
 
-   		 $validator = Validator::make($arr, DriverDetail::$rules);
-        
-        if ($validator->fails()) {
-    
-          return response()->json(['errors'=>$validator->errors()]);
-        }else{
-        	DriverDetail::where('driver_id', $auth_id)->update($arr);
+      	DriverDetail::where('driver_id', $auth_id)->update($arr);
 
-        	return response()->json([
-            'message' => 'Success',
-            'status' => 1,
-            'data' => $arr
+      	return response()->json([
+          'message' => 'Success',
+          'status' => 1,
+          'data' => $arr
         ]);  
         }
-        
    }
 }
