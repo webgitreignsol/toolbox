@@ -95,6 +95,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
 
     Route::group(['namespace' => 'Orders'], function (){
 		Route::get('reports/rides', 'OrderController@index')->name('reports.index')->middleware('permission:report-list');
+        Route::get('reports/{id}/edit', 'OrderController@edit')->name('reports.edit');
+        Route::put('reports/{id}', 'OrderController@update')->name('reports.update');
 		Route::post('reports/search', 'OrderController@search')->name('reports.search')->middleware('permission:report-list');
 	});
 

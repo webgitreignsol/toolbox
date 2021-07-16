@@ -8,8 +8,8 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Order extends Model
 {
 	use LogsActivity;
-	
-   protected $fillabel = ['ride_id', 'passenger_id', 'driver_id', 'ride_fare', 'willgo_comm', 'texes', 'parent_id', 'type'];
+
+   protected $fillable = ['ride_id', 'passenger_id', 'driver_id', 'ride_fare', 'willgo_comm', 'texes', 'parent_id', 'type'];
 
 
 
@@ -27,4 +27,4 @@ class Order extends Model
 	{
 		return $this->belongsTo('App\Ride', 'ride_id');
 	}
-}	
+}

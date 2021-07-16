@@ -154,7 +154,7 @@ $i = 1;
                             @if($order->type == 1) N/A @else {{ $order->parent_id }}@endif
                         </td>
                         <td>
-                            <a href="#" class="btn btn-primary">View </a>
+                            <a href="{{ route('reports.edit',$order->id) }}" class="btn btn-success">Edit </a>
                         </td>
                       </tr>
                       @endforeach
@@ -175,7 +175,7 @@ $i = 1;
                             @if($order->type == 1) N/A @else {{  $order->parent_id }}@endif
                         </td>
                         <td>
-                            <a href="#" class="btn btn-primary">View </a>
+                            <a href="{{ route('reports.edit',$order->id) }}" class="btn btn-success">Edit </a>
                         </td>
                       </tr>
                       @endforeach
