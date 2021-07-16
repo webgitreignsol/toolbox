@@ -19,18 +19,26 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
 
 	Route::group(['prefix' => 'auth'], function() {
         Route::post('login', 'AuthController@login');
+        Route::post('forgot-password', 'AuthController@forgotPassword');
         Route::post('sign-up', 'AuthController@signUp');
-       
+        Route::post('check-otp', 'AuthController@checkOtp');
+        Route::post('verify-otp', 'AuthController@verifyOtp');
+
     Route::group(['middleware' => 'auth:api'], function() {
-		Route::post('create/profile', 'AuthController@createProfile');
+        Route::post('create/profile', 'AuthController@createProfile');
+        Route::post('update/profile/{id}', 'AuthController@updateProfile');
         Route::get('get-profile/{id}','AuthController@getProfile');
-		});    
+        Route::post('sign-out','AuthController@signOut');
+        Route::post('change-password','AuthController@changePassword');
+		});
 
 	});
 
-	Route::group(['namespace' => 'Vendor', 'prefix' => 'vendors', 'middleware' => 'auth:api'], function() {
-
-	});
+    Route::group(['namespace' => 'Vendor', 'prefix' => 'vendors', 'middleware' => 'auth:api'], function() {
+        Route::get('driver/details', 'DriverController@index');
+        Route::post('store/details', 'DriverController@store');
+        Route::post('update/details', 'DriverController@update');
+    });
 
 	Route::group(['namespace' => 'Customer', 'prefix' => 'customer', 'middleware' => 'auth:api'], function() {
 
