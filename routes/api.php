@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
 
 	Route::group(['prefix' => 'auth'], function() {
@@ -31,18 +30,18 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
         Route::post('sign-out','AuthController@signOut');
         Route::post('change-password','AuthController@changePassword');
 		});
-
 	});
 
     Route::group(['namespace' => 'Vendor', 'prefix' => 'vendors', 'middleware' => 'auth:api'], function() {
         Route::get('driver/details', 'DriverController@index');
         Route::post('store/details', 'DriverController@store');
         Route::post('update/details', 'DriverController@update');
+        Route::post('get-drivers-around', 'DriverController@getDriversAroud');
     });
 
 	Route::group(['namespace' => 'Customer', 'prefix' => 'customer', 'middleware' => 'auth:api'], function() {
-
-
+        Route::post('ratings', 'IndexController@ratings');
+        Route::get('my-trips', 'IndexController@getAlltrips');
 	});
 
 });

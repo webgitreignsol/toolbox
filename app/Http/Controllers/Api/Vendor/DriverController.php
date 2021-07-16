@@ -4,16 +4,21 @@ namespace App\Http\Controllers\Api\Vendor;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Traits\ApiResponse;
 use App\DriverDetail;
 use Validator;
+use App\Setting;
 use Auth;
+use DB;
 
 class DriverController extends Controller
 {
+  use ApiResponse;
+
    public function index()
    {	
    		$records = DriverDetail::latest()->paginate();
-        return response()->json(["status" => 1, "message" => 'Driver Details', "data" => $records]);       
+      return response()->json(["status" => 1, "message" => 'Driver Details', "data" => $records]);       
    }
 
    public function store(Request $request)
@@ -37,21 +42,21 @@ class DriverController extends Controller
    		$auth_id = Auth::user()->id;
 
    		$arr = array(
-   			'driver_contact' 			   => $request->driver_contact,
-   			'driver_photo' 				   => $dr_img,
-   			'car_photo' 				     => $cr_img,
-   			'car_make' 					     => $request->car_make,
-   			'car_registration_number'=> $request->car_registration_number,
-   			'driver_id' 				     => Auth::user()->id
+     			'driver_contact' 			   => $request->driver_contact,
+     			'driver_photo' 				   => $dr_img,
+     			'car_photo' 				     => $cr_img,
+     			'car_make' 					     => $request->car_make,
+     			'car_registration_number'=> $request->car_registration_number,
+     			'driver_id' 				     => Auth::user()->id
    			);
         
       	DriverDetail::where('driver_id', $auth_id)->update($arr);
 
       	return response()->json([
-          'message' => 'Success',
-          'status' => 1,
-          'data' => $arr
-        ]);         
+          'message'     => 'Success',
+          'status'      => 1,
+          'data'        => $arr
+        ]);
    }
 
    public function update(Request $request)
@@ -73,21 +78,58 @@ class DriverController extends Controller
    		$auth_id = Auth::user()->id;   		
 
    		$arr = array(
-   			'driver_contact' 			    => $request->driver_contact,
-   			'driver_photo' 				    => $dr_img,
-   			'car_photo' 				      => $cr_img,
-   			'car_make' 					      => $request->car_make,
-   			'car_registration_number' => $request->car_registration_number,
-   			'driver_id' 				      => $auth_id
+     			'driver_contact' 			    => $request->driver_contact,
+     			'driver_photo' 				    => $dr_img,
+     			'car_photo' 				      => $cr_img,
+     			'car_make' 					      => $request->car_make,
+     			'car_registration_number' => $request->car_registration_number,
+     			'driver_id' 				      => $auth_id
    			);
 
       	DriverDetail::where('driver_id', $auth_id)->update($arr);
 
       	return response()->json([
-          'message' => 'Success',
-          'status' => 1,
-          'data' => $arr
+          'message'       => 'Success',
+          'status'        => 1,
+          'data'          => $arr
         ]);  
-        }
-   }
+      }
+
+    public function getDriversAroud(Request $request)
+    {
+      $lat = $request->get('latitude');
+      $lon = $request->get('longitude');
+      $limit = $request->get('limit');
+      $offset = $request->get('offset');
+      
+      if($lat && $lon) {
+          $distance = Setting::pluck('distance');
+        
+          $records = DB::table('user_profiles')
+            ->join('users', 'user_profiles.user_id', 'users.id')
+            ->select("user_profiles.*", "users.*" 
+                ,DB::raw("6371 * acos(cos(radians(" . $lat . ")) 
+                * cos(radians(latitude)) 
+                * cos(radians(longitude) - radians(" . $lon . ")) 
+                + sin(radians(" .$lat. ")) 
+                * sin(radians(latitude))) AS distance"))
+                ->having("distance", "<", $distance);
+
+            if ($limit || $offset) {
+                $records = $records->orderby('distance', 'asc')->skip($offset)->take($limit);
+            } else {
+                $records = $records->orderby('distance', 'asc');
+            }
+
+            $records = $records->get();
+    
+            return response()->json([
+              'message'   => 'Success',
+              'status'  => 1,
+              'data'    => $records // new \stdClass()
+            ]);
+      } else {
+          return $this->apiErrorMessageResponse('Invalid Parameter');
+      }
+    }   
 }
