@@ -14,6 +14,7 @@ use App\User;
 use App\UserProfile;
 use Auth;
 use Carbon\Carbon;
+use App\Rating;
 class AuthController extends Controller
 {
     public function login(Request $request)
@@ -95,10 +96,12 @@ class AuthController extends Controller
 
     public function getProfile($id)
     {
+        
         $user = User::with('user_profiles')->where('id',$id)->first();
+        $count = Rating::where('driver_id', $user->id)->avg('rating');
 
         if ($user) {
-            return response()->json(["status" => 1, "message" => 'User Match Succesfully', "data" => $user]);
+            return response()->json(["status" => 1, "message" => 'User Match Succesfully', "data" => [$user, $count]]);
         } else {
             return response()->json(["status" => 0, "message" => 'Undefined User', "data" => []]);
         }

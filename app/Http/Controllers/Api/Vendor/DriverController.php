@@ -101,13 +101,13 @@ class DriverController extends Controller
       $lon = $request->get('longitude');
       $limit = $request->get('limit');
       $offset = $request->get('offset');
-
       if($lat && $lon) {
           $distance = Setting::pluck('distance');
 
           $records = DB::table('user_profiles')
             ->join('users', 'user_profiles.user_id', 'users.id')
-            ->select("user_profiles.*", "users.*"
+            ->join('driver_details', 'user_profiles.user_id', 'driver_details.driver_id')
+            ->select("user_profiles.*", "users.*", "driver_details.*"
                 ,DB::raw("6371 * acos(cos(radians(" . $lat . "))
                 * cos(radians(latitude))
                 * cos(radians(longitude) - radians(" . $lon . "))
@@ -136,6 +136,6 @@ class DriverController extends Controller
     public function getAlltrips()
     {
       $trips = Trip::where('driver_id', Auth::user()->id)->latest()->paginate(10);
-      return response()->json(["status" => 1, "message" => 'Customer Trips', "data" => $trips]);
+      return response()->json(["status" => 1, "message" => 'Customer Trips', "data" => $trips]);       
     }
 }

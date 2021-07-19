@@ -491,7 +491,8 @@ class User extends Authenticatable
     // Auth Section End Created by MYTECH
 
     
-    public function user_profiles(){
+    public function user_profiles()
+    {
 
         return $this->HasOne('App\UserProfile');
     }
@@ -504,6 +505,11 @@ class User extends Authenticatable
     public function jobs(){
 
         return $this->hasMany('App\Job', 'user_id');
+    }
+
+    public function ratings()
+    {
+        return $this->hasMany('App\Rating', 'driver_id');
     }
    
    
