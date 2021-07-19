@@ -17,7 +17,6 @@ class DriverController extends Controller
 
    public function index()
    {
-       return 'test';
    		$records = DriverDetail::latest()->paginate();
       return response()->json(["status" => 1, "message" => 'Driver Details', "data" => $records]);
    }
@@ -132,5 +131,11 @@ class DriverController extends Controller
       } else {
           return $this->apiErrorMessageResponse('Invalid Parameter');
       }
+    }
+
+    public function getAlltrips()
+    {
+      $trips = Trip::where('driver_id', Auth::user()->id)->latest()->paginate(10);
+      return response()->json(["status" => 1, "message" => 'Customer Trips', "data" => $trips]);       
     }
 }

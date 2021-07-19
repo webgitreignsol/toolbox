@@ -20,7 +20,9 @@ class CreateTripsTable extends Migration
             $table->string('drop_off');
             $table->string('vehicle_type');
             $table->string('fare');
-            $table->integer('user_id');
+            $table->integer('driver_id');
+            $table->integer('passenger_id');
+            $table->integer('status');
             $table->timestamps();
         });
     }

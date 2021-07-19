@@ -11,7 +11,7 @@ class IndexController extends Controller
 {
     public function getAlltrips()
     {
-    	$trips = Trip::where('user_id', Auth::user()->id)->latest()->paginate(10);
+    	$trips = Trip::where('passneger_id', Auth::user()->id)->latest()->paginate(10);
     	return response()->json(["status" => 1, "message" => 'Customer Trips', "data" => $trips]);       
     }
 
