@@ -8,6 +8,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class CarType extends Model
 {
 	use LogsActivity;
+    protected $table = 'car_type';
 
     protected $fillable = ['name', 'description'];
 

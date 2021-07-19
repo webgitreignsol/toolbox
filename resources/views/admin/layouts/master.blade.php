@@ -224,6 +224,19 @@
                   </ul>
               </li>
             @endif
+              @if(Gate::check('car-list') || Gate::check('car-create'))
+                  <li class="dropdown {{ Request::is('admin/car', 'admin/car/create') ? 'active' : '' }}">
+                      <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="type"></i><span>Vehicle</span></a>
+                      <ul class="dropdown-menu">
+                          @can('car-list')
+                              <li class="{{ Request::is('admin/car') ? 'active' : '' }}"><a class="nav-link" href="{{ route('car.index') }}">All Car Types</a></li>
+                          @endcan
+                          @can('car-create')
+                              <li class="{{ Request::is('admin/car/create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('car.create') }}">Add Car Type</a></li>
+                          @endcan
+                      </ul>
+                  </li>
+              @endif
              @if(Gate::check('ride-list'))
               <li class="dropdown {{ Request::is('admin/rides','admin/rides/accepted', 'admin/rides/completed', 'admin/rides/cancelled') ? 'active' : '' }}">
                   <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="truck"></i><span>Rides Management</span></a>

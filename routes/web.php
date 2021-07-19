@@ -45,6 +45,15 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
 		Route::any('users/{id}/destroy', 'UserController@destroy')->name('users.destroy')->middleware('permission:user-delete');
 	});
 
+    Route::group(['namespace' => 'CarType'], function (){
+        Route::get('car', 'CarTypeController@index')->name('car.index')->middleware('permission:car-list');
+        Route::get('car/create', 'CarTypeController@create')->name('car.create')->middleware('permission:car-create');
+        Route::post('car', 'CarTypeController@store')->name('car.store')->middleware('permission:car-create');
+        Route::get('car/{id}/edit', 'CarTypeController@edit')->name('car.edit')->middleware('permission:car-edit');
+        Route::put('car/{id}', 'CarTypeController@update')->name('car.update')->middleware('permission:car-edit');
+        Route::any('car/{id}/destroy', 'CarTypeController@destroy')->name('car.destroy')->middleware('permission:car-delete');
+    });
+
 	Route::group(['namespace' => 'Passenger'], function (){
         Route::get('passengers', 'PassengerController@index')->name('passengers.index')->middleware('permission:passenger-list');
         Route::get('passengers/create', 'PassengerController@create')->name('passengers.create')->middleware('permission:passenger-create');
