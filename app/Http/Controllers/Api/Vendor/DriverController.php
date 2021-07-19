@@ -16,22 +16,23 @@ class DriverController extends Controller
   use ApiResponse;
 
    public function index()
-   {	
+   {
+       return 'test';
    		$records = DriverDetail::latest()->paginate();
-      return response()->json(["status" => 1, "message" => 'Driver Details', "data" => $records]);       
+      return response()->json(["status" => 1, "message" => 'Driver Details', "data" => $records]);
    }
 
    public function store(Request $request)
    {
     $validator = Validator::make($request->all(), DriverDetail::$rules);
-      
+
       if ($validator->fails()) {
-    
+
           return response()->json(['errors'=>$validator->errors()]);
       }
-   		
+
       $drimage = $request->file('driver_photo');
-   		$crimage = $request->file('car_photo');	
+   		$crimage = $request->file('car_photo');
 
    		$dr_img = rand().'.'. $drimage->getClientOriginalExtension();
    		$drimage->move(public_path('assets/admin/driverImg'), $dr_img);
@@ -49,7 +50,7 @@ class DriverController extends Controller
      			'car_registration_number'=> $request->car_registration_number,
      			'driver_id' 				     => Auth::user()->id
    			);
-        
+
       	DriverDetail::where('driver_id', $auth_id)->update($arr);
 
       	return response()->json([
@@ -62,12 +63,12 @@ class DriverController extends Controller
    public function update(Request $request)
    {
       if ($validator->fails()) {
-    
+
           return response()->json(['errors'=>$validator->errors()]);
       }
 
    		$drimage = $request->file('driver_photo');
-   		$crimage = $request->file('car_photo');	
+   		$crimage = $request->file('car_photo');
 
    		$dr_img = rand().'.'. $drimage->getClientOriginalExtension();
    		$drimage->move(public_path('assets/admin/driverImg'), $dr_img);
@@ -75,7 +76,7 @@ class DriverController extends Controller
    		$cr_img = rand().'.'. $crimage->getClientOriginalExtension();
    		$crimage->move(public_path('assets/admin/carImg'), $cr_img);
 
-   		$auth_id = Auth::user()->id;   		
+   		$auth_id = Auth::user()->id;
 
    		$arr = array(
      			'driver_contact' 			    => $request->driver_contact,
@@ -92,7 +93,7 @@ class DriverController extends Controller
           'message'       => 'Success',
           'status'        => 1,
           'data'          => $arr
-        ]);  
+        ]);
       }
 
     public function getDriversAroud(Request $request)
@@ -101,17 +102,17 @@ class DriverController extends Controller
       $lon = $request->get('longitude');
       $limit = $request->get('limit');
       $offset = $request->get('offset');
-      
+
       if($lat && $lon) {
           $distance = Setting::pluck('distance');
-        
+
           $records = DB::table('user_profiles')
             ->join('users', 'user_profiles.user_id', 'users.id')
-            ->select("user_profiles.*", "users.*" 
-                ,DB::raw("6371 * acos(cos(radians(" . $lat . ")) 
-                * cos(radians(latitude)) 
-                * cos(radians(longitude) - radians(" . $lon . ")) 
-                + sin(radians(" .$lat. ")) 
+            ->select("user_profiles.*", "users.*"
+                ,DB::raw("6371 * acos(cos(radians(" . $lat . "))
+                * cos(radians(latitude))
+                * cos(radians(longitude) - radians(" . $lon . "))
+                + sin(radians(" .$lat. "))
                 * sin(radians(latitude))) AS distance"))
                 ->having("distance", "<", $distance);
 
@@ -122,7 +123,7 @@ class DriverController extends Controller
             }
 
             $records = $records->get();
-    
+
             return response()->json([
               'message'   => 'Success',
               'status'  => 1,
@@ -131,5 +132,5 @@ class DriverController extends Controller
       } else {
           return $this->apiErrorMessageResponse('Invalid Parameter');
       }
-    }   
+    }
 }
