@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRatingsTable extends Migration
+class CreateReviewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateRatingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ratings', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('ride_id')->unsigned(20);
             $table->foreign('ride_id')->references('id')->on('rides');
-            $table->bigInteger('driver_id')->unsigned(20);
-            $table->foreign('driver_id')->references('id')->on('users');
-            $table->bigInteger('passenger_id')->unsigned(20);
-            $table->foreign('passenger_id')->references('id')->on('users');
+            $table->bigInteger('get_review')->unsigned(20);
+            $table->foreign('get_review')->references('id')->on('users');
+            $table->bigInteger('reviewed_by')->unsigned(20);
+            $table->foreign('reviewed_by')->references('id')->on('users');
             $table->integer('rating');
             $table->string('comments');
             $table->timestamps();
@@ -34,6 +34,6 @@ class CreateRatingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ratings');
+        Schema::dropIfExists('reviews');
     }
 }

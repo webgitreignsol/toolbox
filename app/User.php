@@ -60,7 +60,7 @@ class User extends Authenticatable
 
 
     public function getRatingsAttribute($val) {
-        $count = Rating::where('driver_id', $this->id)
+        $count = Rating::where('get_review', $this->id)
                  ->avg('rating');
                  return $count ?? 0;
     }

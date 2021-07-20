@@ -100,11 +100,6 @@ class AuthController extends Controller
         
         $user = User::with('user_profiles')->where('id',$id)->first();
         
-        // $count = Rating::select(DB::raw('AVG(rating) as rating'))
-        //          ->groupBy('driver_id')
-        //          ->get();
-      
-
         if ($user) {
             return response()->json(["status" => 1, "message" => 'User Match Succesfully', "data" => [$user]]);
         } else {
