@@ -9,7 +9,8 @@ class Address extends Model
 {
 	use LogsActivity;
 
-    protected $fillable ['user_id', 'address'];
+    protected $fillable = ['user_id', 'address'];
+    protected $table = 'address';
 
 	public function user()
 	{

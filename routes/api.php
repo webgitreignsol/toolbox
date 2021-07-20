@@ -43,6 +43,10 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
 	Route::group(['namespace' => 'Customer', 'prefix' => 'customer', 'middleware' => 'auth:api'], function() {
         Route::post('ratings', 'IndexController@ratings');
         Route::get('my-trips', 'IndexController@getAlltrips');
+        Route::post('create-address', 'AddressController@store');
+        Route::post('update-address/{id}', 'AddressController@update');
+        Route::get('get-address', 'AddressController@getUserAddress');
+        Route::get('get-alladdress', 'AddressController@index');
 	});
 
 });
