@@ -32,7 +32,6 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
         Route::get('get-profile/{id}','AuthController@getProfile');
         Route::post('sign-out','AuthController@signOut');
         Route::post('change-password','AuthController@changePassword');
-        Route::get('my-trips', 'DriverController@getAlltrips');
 		});
 	});
 
