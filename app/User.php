@@ -476,6 +476,75 @@ class User extends Authenticatable
         return $user;
     }
 
+    public function userGoogleAuth($request)
+    {
+        $validationRules['name'] = 'required|string|min:3|max:55';
+        $validationRules['email'] = 'required|string|email|min:5|max:155';
+        $validationRules['social_token'] = 'required|string';
+
+        $validator = Validator::make($request->all(), $validationRules);
+
+        if ($validator->fails()) {
+            return $validator;
+        }
+
+        $record = $this::where('social_token', $request->social_token)
+            ->first();
+
+        if (!$record)
+        {
+            $record = $this;
+
+            $record->name = $request->name;
+            $record->email = $request->email;
+            $record->verified_by  = 'google';
+            $record->social_id = $request->social_token;
+            $record->password = bcrypt('googlePassword');
+            $record->social_provider = 'google';
+            $record->social_token = $request->social_token;
+            $record->email_verified_at = date('Y-m-d H:i:s');
+
+            $record->save();
+        }
+
+        if (!Auth::guard('frontend')->loginUsingId($record->id))
+        {
+            return 'Something wen\'t wrong';
+        }
+
+        if (Auth::guard('frontend')->user())
+        {
+            $user = Auth::guard('frontend')->user();
+        }
+
+        $tokenResult = $user->createToken('Personal Access Token');
+
+        $token = $tokenResult->token;
+
+        if ($request->remember_me)
+        {
+            $token->expires_at = Carbon::now()->addWeeks(1);
+        }
+
+        $token->save();
+
+        $device_type = $request->has('device_type') ? $request->device_type : '';
+        $device_token = $request->has('device_token') ? $request->device_token : '';
+
+        if ($device_token && $device_type)
+        {
+            $user->device_type   = $device_type;
+            $user->device_token  = $device_token;
+
+            $user->save();
+        }
+
+        $user->token = 'Bearer ' . $tokenResult->accessToken;
+        // $user->roles = $user->roles ?? [];
+
+        return $user;
+    }
+
     public function signOut($request)
     {
         try
