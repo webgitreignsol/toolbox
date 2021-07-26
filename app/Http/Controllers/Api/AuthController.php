@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\Frontend\User\GetProfile as GetUserProfile;
 use Laravel\Passport\HasApiTokens;
+use App\Http\Traits\ApiResponse;
 use Illuminate\Support\Facades\Hash;
 use App\Classes\Helper;
 use Validator;
@@ -18,6 +19,8 @@ use App\Rating;
 use DB;
 class AuthController extends Controller
 {
+    use ApiResponse;
+
     public function login(Request $request)
     {
         if($request->has('email')) {
@@ -97,9 +100,9 @@ class AuthController extends Controller
 
     public function getProfile($id)
     {
-        
+
         $user = User::with('user_profiles')->where('id',$id)->first();
-        
+
         if ($user) {
             return response()->json(["status" => 1, "message" => 'User Match Succesfully', "data" => [$user]]);
         } else {
@@ -287,6 +290,38 @@ class AuthController extends Controller
         return response()->json(["status" => 1, "message" => 'OTP is valid', "data" => []]);
     }
 
+    public function updatePassword(Request $request)
+    {
+        $new_password = $request->get('new_password');
+        $confirm_password = $request->get('new_password_confirmation');
+        $email = $request->get('email');
+        $otp = $request->get('otp');
+
+        $validator = Validator::make($request->all(), [
+            'new_password' => 'required|string|min:8|max:16|confirmed',
+            'email' => 'required|email|exists:users',
+            'otp' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->apiErrorMessageResponse($validator->errors());
+        }
+
+        $User = User::where('otp', $otp)->where('email', $email)->first();
+
+        if(!$User) {
+            return $this->apiErrorMessageResponse("Please enter valid OTP");
+        }
+        if($new_password == $confirm_password) {
+            $User->password = bcrypt($new_password);
+            $User->otp = null;
+            $User->save();
+        } else {
+            return $this->apiErrorMessageResponse("New Password And Confirm Does Not Match");
+        }
+        return $this->apiSuccessMessageResponse('Password updated successfully');
+    }
+
     public function verifyOtp(Request $request)
     {
         $otp = $request->otp;
@@ -313,5 +348,54 @@ class AuthController extends Controller
             return response()->json(["status" => 0, "message" => "Please enter valid OTP", "data" => []]);
         }
         return response()->json(["status" => 1, "message" => 'Email Verify Succesfully', "data" => []]);
+    }
+
+    public function resendOtp(Request $request)
+    {
+        $user = new User();
+        $user = $user->resendOtp($request);
+
+        if( $user instanceof \App\User ) {
+
+            $message = "The Otp Code has been sent to your registered email";
+
+            return $this->apiSuccessMessageResponse($message);
+        }
+
+        if(gettype($user) == 'string') {
+            return $this->apiErrorMessageResponse($user, []);
+        } else {
+            return $this->apiValidatorErrorResponse('Invalid Parameters', $user->errors());
+        }
+    }
+
+    public function facebookSignIn(Request $request)
+    {
+        try
+        {
+            $record = new User();
+            $record = $record->userFacebookAuth($request);
+
+            if (!$record instanceof User)
+            {
+                if (gettype($record) == 'string')
+                {
+                    return $this->apiErrorMessageResponse($record, []);
+                }
+                else
+                {
+                    return $this->apiValidatorErrorResponse('Invalid Parameters', $record->errors());
+                }
+            }
+            else
+            {
+                return $this->apiSuccessMessageResponse('You hav\'n sign in successfully', $record);
+            }
+
+        }
+        catch (Exception $e)
+        {
+            return $this->apiErrorMessageResponse($e->getMessage(), []);
+        }
     }
 }

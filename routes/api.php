@@ -19,9 +19,12 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
 	Route::group(['prefix' => 'auth'], function() {
         Route::post('login', 'AuthController@login');
         Route::post('forgot-password', 'AuthController@forgotPassword');
+        Route::post('update-password', 'AuthController@updatePassword');
         Route::post('sign-up', 'AuthController@signUp');
         Route::post('check-otp', 'AuthController@checkOtp');
         Route::post('verify-otp', 'AuthController@verifyOtp');
+        Route::post('resend-otp', 'AuthController@resendOtp');
+        Route::post('facebook-login', 'AuthController@facebookSignIn');
 
     Route::group(['middleware' => 'auth:api'], function() {
         Route::post('create/profile', 'AuthController@createProfile');
@@ -38,6 +41,8 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
         Route::post('store/details', 'DriverController@store');
         Route::post('update/details', 'DriverController@update');
         Route::post('get-drivers-around', 'DriverController@getDriversAroud');
+        Route::get('trip-req', 'DriverController@TripReq');
+        Route::get('my-trips', 'DriverController@getAlltrips');
     });
 
 	Route::group(['namespace' => 'Customer', 'prefix' => 'customer', 'middleware' => 'auth:api'], function() {

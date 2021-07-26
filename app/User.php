@@ -21,7 +21,7 @@ class User extends Authenticatable
     use HasRoles;
     use HasApiTokens;
     use LogsActivity;
-    
+
 
     protected $guard = 'api';
 
@@ -102,12 +102,81 @@ class User extends Authenticatable
         }
     }
 
+    public function userFacebookAuth($request)
+    {
+        $validationRules['name'] = 'required|string|min:3|max:55';
+        $validationRules['email'] = 'required|string|email|min:5|max:155';
+        $validationRules['social_token'] = 'required|string';
+
+        $validator = Validator::make($request->all(), $validationRules);
+
+        if ($validator->fails()) {
+            return $validator;
+        }
+
+        $record = $this::where('social_token', $request->social_token)
+            ->first();
+
+        if (!$record)
+        {
+            $record = $this;
+
+            $record->name = $request->name;
+            $record->email = $request->email;
+            $record->verified_by  = 'facebook';
+            $record->social_id = $request->social_token;
+            $record->password = bcrypt('facebookPassword');
+            $record->social_provider = 'facebook';
+            $record->social_token = $request->social_token;
+            $record->email_verified_at = date('Y-m-d H:i:s');
+
+            $record->save();
+        }
+
+        if (!Auth::guard('frontend')->loginUsingId($record->id))
+        {
+            return 'Something wen\'t wrong';
+        }
+
+        if (Auth::guard('frontend')->user())
+        {
+            $user = Auth::guard('frontend')->user();
+        }
+
+        $tokenResult = $user->createToken('Personal Access Token');
+
+        $token = $tokenResult->token;
+
+        if ($request->remember_me)
+        {
+            $token->expires_at = Carbon::now()->addWeeks(1);
+        }
+
+        $token->save();
+
+        $device_type = $request->has('device_type') ? $request->device_type : '';
+        $device_token = $request->has('device_token') ? $request->device_token : '';
+
+        if ($device_token && $device_type)
+        {
+            $user->device_type   = $device_type;
+            $user->device_token  = $device_token;
+
+            $user->save();
+        }
+
+        $user->token = 'Bearer ' . $tokenResult->accessToken;
+        // $user->roles = $user->roles ?? [];
+
+        return $user;
+    }
+
     public function resendOtp($request)
     {
         $record = $this::whereNotNull('otp');
-        
+
         $record = $this::query();
-        
+
         if ($request->email)
         {
             $record->where('email', $request->email);
@@ -115,7 +184,7 @@ class User extends Authenticatable
 
         $record = $record->first();
 
-        if (!$record) 
+        if (!$record)
         {
             return 'Invalid User';
         }
@@ -265,7 +334,7 @@ class User extends Authenticatable
 
         $requestFor = 'email';
 
-        if (!$record) 
+        if (!$record)
         {
             return 'invalid email';
         }
@@ -274,7 +343,7 @@ class User extends Authenticatable
         $record->verified_by = $requestFor;
         $record->save();
 
-        if ($requestFor = 'email') 
+        if ($requestFor = 'email')
         {
             $data = [
                 'email' => $record->email,
@@ -301,17 +370,17 @@ class User extends Authenticatable
 
         $record = $this::where('email', $request->email)->first();
 
-        if (!$record) 
+        if (!$record)
         {
             return 'Invalid user';
         }
 
-        if ($record->otp == null) 
+        if ($record->otp == null)
         {
             return ['error' => 'User is already verified'];
         }
 
-        if ($record->otp != $request->otp) 
+        if ($record->otp != $request->otp)
         {
             return 'Please enter valid otp';
         }
@@ -319,7 +388,7 @@ class User extends Authenticatable
         $record->otp = null;
         $record->save();
 
-        if ($record->verified_by = 'email') 
+        if ($record->verified_by = 'email')
         {
             $data = [
                 'email' => $record->email,
@@ -328,7 +397,7 @@ class User extends Authenticatable
             ];
 
             Helper::sendEmail('accountVerification', ['data' => $record], $data);
-        } 
+        }
 
         return $record;
     }
@@ -340,7 +409,7 @@ class User extends Authenticatable
             'password' => 'required|string|min:8|max:16|confirmed'
         ]);
 
-        if ($validator->fails()) 
+        if ($validator->fails())
         {
             return $validator;
         }
@@ -422,10 +491,10 @@ class User extends Authenticatable
         $record = $this::where('social_token', $request->social_token)
         ->first();
 
-        if (!$record) 
+        if (!$record)
         {
             $record = $this;
-            
+
             $record->name = $request->name;
             $record->email = $request->email;
             $record->verified_by  = 'facebook';
@@ -438,12 +507,12 @@ class User extends Authenticatable
             $record->save();
         }
 
-        if (!Auth::guard('frontend')->loginUsingId($record->id)) 
+        if (!Auth::guard('frontend')->loginUsingId($record->id))
         {
             return 'Something wen\'t wrong';
         }
 
-        if (Auth::guard('frontend')->user()) 
+        if (Auth::guard('frontend')->user())
         {
             $user = Auth::guard('frontend')->user();
         }
@@ -462,7 +531,7 @@ class User extends Authenticatable
         $device_type = $request->has('device_type') ? $request->device_type : '';
         $device_token = $request->has('device_token') ? $request->device_token : '';
 
-        if ($device_token && $device_type) 
+        if ($device_token && $device_type)
         {
             $user->device_type   = $device_type;
             $user->device_token  = $device_token;
@@ -472,21 +541,21 @@ class User extends Authenticatable
 
         $user->token = 'Bearer ' . $tokenResult->accessToken;
         // $user->roles = $user->roles ?? [];
-        
+
         return $user;
     }
 
     public function signOut($request)
     {
-        try 
+        try
         {
             $user = $request->user();
             $user->device_token = null;
             $user->device_type = null;
             $user->save();
             $request->user()->token()->revoke();
-        } 
-        catch (\Exception $exception) 
+        }
+        catch (\Exception $exception)
         {
             if ($exception instanceof \Illuminate\Auth\AuthenticationException)
             {
@@ -498,7 +567,7 @@ class User extends Authenticatable
     }
     // Auth Section End Created by MYTECH
 
-    
+
     public function user_profiles()
     {
 
@@ -519,8 +588,8 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Rating', 'driver_id');
     }
-   
-   
+
+
     // Resources Start Created By MYTECH
     public function vendorListing($request)
     {
@@ -532,7 +601,7 @@ class User extends Authenticatable
 
         $result = [];
 
-        if (count($records) > 0) 
+        if (count($records) > 0)
         {
             $result = VendorListings::collection($records)->toArray($request);
         }

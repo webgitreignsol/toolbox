@@ -145,6 +145,6 @@ class DriverController extends Controller
     public function getAlltrips()
     {
       $trips = Trip::where('driver_id', Auth::user()->id)->latest()->paginate(10);
-      return response()->json(["status" => 1, "message" => 'Customer Trips', "data" => $trips]);       
+      return response()->json(["status" => 1, "message" => 'Customer Trips', "data" => $trips]);
     }
 }
