@@ -19,14 +19,16 @@ class CreateRidesTable extends Migration
             $table->integer('driver_id');
             $table->string('drop_off');
             $table->string('pick_up');
-            $table->time('time');
+            $table->time('accepted_at');
+            $table->time('start_at');
+            $table->time('cancel_at');
+            $table->time('completed_at');
             $table->integer('type');
             $table->integer('fare');
             $table->integer('status');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *

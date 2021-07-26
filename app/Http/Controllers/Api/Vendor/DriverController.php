@@ -8,6 +8,8 @@ use App\Http\Traits\ApiResponse;
 use App\DriverDetail;
 use Validator;
 use App\Setting;
+use App\Ride;
+use App\Trip;
 use Auth;
 use DB;
 
@@ -123,7 +125,7 @@ class DriverController extends Controller
             }
 
             $records = $records->get();
-// dd($request->car_photo);
+            // dd($request->car_photo);
             if(count($records) > 0) {
             return response()->json([
               'message'   => 'Success',
@@ -136,15 +138,19 @@ class DriverController extends Controller
               'status'  => 0,
               'data'    => $records // new \stdClass()
             ]);
-          }
-      // } else {
-      //     return $this->apiErrorMessageResponse('Invalid Parameter');
-      // }
+          }          
     }
 
     public function getAlltrips()
     {
       $trips = Trip::where('driver_id', Auth::user()->id)->latest()->paginate(10);
-      return response()->json(["status" => 1, "message" => 'Customer Trips', "data" => $trips]);
+      return response()->json(["status" => 1, "message" => 'Driver Trips  History', "data" => $trips]);
+    }
+
+    public function TripReq($id)
+    {
+      $trip = Ride::with('passenger', 'profile' )->where('id', $id)->first();
+
+      return response()->json(["status" => 1, "message" => 'Trip Request', "data" => $trip]);
     }
 }

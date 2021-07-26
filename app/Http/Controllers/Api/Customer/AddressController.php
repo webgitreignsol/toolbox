@@ -13,7 +13,7 @@ class AddressController extends Controller
 {
     public function index()
     {
-        $address = Address::get();
+        $address = Address::latest()->paginate(10);
         return response()->json(["status" => 1, "message" => 'All Addresses', "data" => $address]);
     }
 

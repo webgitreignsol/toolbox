@@ -521,6 +521,7 @@ class User extends Authenticatable
     }
 
 
+
     // Resources Start Created By MYTECH
     public function vendorListing($request)
     {
