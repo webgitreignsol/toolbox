@@ -26,6 +26,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
         Route::post('resend-otp', 'AuthController@resendOtp');
         Route::post('facebook-login', 'AuthController@facebookSignIn');
         Route::post('google-login', 'AuthController@googleSignIn');
+        Route::post('apple-login', 'AuthController@appleSignIn');
 
 
         Route::group(['middleware' => 'auth:api'], function() {
