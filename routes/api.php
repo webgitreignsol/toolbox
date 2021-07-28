@@ -54,6 +54,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
         Route::post('update-address/{id}', 'AddressController@update');
         Route::get('get-address', 'AddressController@getUserAddress');
         Route::get('get-alladdress', 'AddressController@index');
+        Route::post('get-drivers-around', 'IndexController@getDriversAroud');
         Route::get('driver/details/{id}', 'IndexController@driverDetails');
 	});
 
