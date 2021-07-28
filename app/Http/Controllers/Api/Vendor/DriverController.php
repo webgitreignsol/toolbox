@@ -114,6 +114,24 @@ class DriverController extends Controller
         return response()->json(["status" => 1, "message" => 'Ride Accepted', "data" => $ride]);
     }
 
+    public function startedAt($id)
+    {
+        $ride = Ride::find($id);
+        $ride->status = 'started';
+        $ride->start_at = date('Y-m-d H:i:s');
+        $ride->save();
+        return response()->json(["status" => 1, "message" => 'Ride Started', "data" => $ride]);
+    }
+
+    public function completedAt($id)
+    {
+        $ride = Ride::find($id);
+        $ride->status = 'completed';
+        $ride->completed_at = date('Y-m-d H:i:s');
+        $ride->save();
+        return response()->json(["status" => 1, "message" => 'Ride Completed', "data" => $ride]);
+    }
+
     public function cancellAt($id)
     {
         $ride = Ride::find($id);
