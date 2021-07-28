@@ -398,4 +398,64 @@ class AuthController extends Controller
             return $this->apiErrorMessageResponse($e->getMessage(), []);
         }
     }
+
+    public function googleSignIn(Request $request)
+    {
+        try
+        {
+            $record = new User();
+            $record = $record->userGoogleAuth($request);
+
+            if (!$record instanceof User)
+            {
+                if (gettype($record) == 'string')
+                {
+                    return $this->apiErrorMessageResponse($record, []);
+                }
+                else
+                {
+                    return $this->apiValidatorErrorResponse('Invalid Parameters', $record->errors());
+                }
+            }
+            else
+            {
+                return $this->apiSuccessMessageResponse('You hav\'n sign in successfully', $record);
+            }
+
+        }
+        catch (Exception $e)
+        {
+            return $this->apiErrorMessageResponse($e->getMessage(), []);
+        }
+    }
+
+    public function appleSignIn(Request $request)
+    {
+        try
+        {
+            $record = new User();
+            $record = $record->userAppleAuth($request);
+
+            if (!$record instanceof User)
+            {
+                if (gettype($record) == 'string')
+                {
+                    return $this->apiErrorMessageResponse($record, []);
+                }
+                else
+                {
+                    return $this->apiValidatorErrorResponse('Invalid Parameters', $record->errors());
+                }
+            }
+            else
+            {
+                return $this->apiSuccessMessageResponse('You hav\'n sign in successfully', $record);
+            }
+
+        }
+        catch (Exception $e)
+        {
+            return $this->apiErrorMessageResponse($e->getMessage(), []);
+        }
+    }
 }

@@ -25,8 +25,11 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
         Route::post('verify-otp', 'AuthController@verifyOtp');
         Route::post('resend-otp', 'AuthController@resendOtp');
         Route::post('facebook-login', 'AuthController@facebookSignIn');
+        Route::post('google-login', 'AuthController@googleSignIn');
+        Route::post('apple-login', 'AuthController@appleSignIn');
 
-    Route::group(['middleware' => 'auth:api'], function() {
+
+        Route::group(['middleware' => 'auth:api'], function() {
         Route::post('create/profile', 'AuthController@createProfile');
         Route::post('update/profile/{id}', 'AuthController@updateProfile');
         Route::get('get-profile/{id}','AuthController@getProfile');
