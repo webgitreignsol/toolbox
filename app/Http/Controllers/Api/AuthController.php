@@ -184,24 +184,32 @@ class AuthController extends Controller
     }
 
     public function signUp(Request $request){
-        $rules=[
-            'name'=>'required',
-            'email'=>'required|email',
-            'password'=>'required|min:6',
-            'phone'=>'required|min:11|max:17'
-        ];
-        $validator = Validator::make($request->all(), $rules);
+        try
+        {
+            $record = new User();
+            $record = $record->signup($request);
 
-        if($validator->fails()) {
-            return response()->json(["status" => 0, "message" => $validator->errors(), "data" => []]);
+            if (!$record instanceof User)
+            {
+                if (gettype($record) == 'string')
+                {
+                    return $this->apiErrorMessageResponse($record, []);
+                }
+                else
+                {
+                    return $this->apiValidatorErrorResponse('Invalid Parameters', $record->errors());
+                }
+            }
+            else
+            {
+                return $this->apiSuccessMessageResponse('You hav\'n sign Up successfully', $record);
+            }
+
         }
-        $user=new User();
-        $user->name=$request->name;
-        $user->email=$request->email;
-        $user->phone=$request->phone;
-        $user->password=bcrypt($request->password);
-        $user->save();
-        return response()->json(["status" => 1, "message" => 'Account Created Successfully', "data" => []]);
+        catch (Exception $e)
+        {
+            return $this->apiErrorMessageResponse($e->getMessage(), []);
+        }
     }
 
     public function signOut(Request $request)

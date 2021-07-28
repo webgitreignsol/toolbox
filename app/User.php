@@ -218,7 +218,6 @@ class User extends Authenticatable
         $validationRules['email'] = 'required|string|email|min:5|max:155|unique:users';
         $validationRules['country_code'] = 'required|numeric';
         $validationRules['phone'] = 'required|numeric|digits_between:9,14|unique:users';
-        $validationRules['type'] = 'required|in:customer,vendor';
 
         $validator = Validator::make($request->all(), $validationRules);
 
@@ -231,31 +230,34 @@ class User extends Authenticatable
             $token = mt_rand(1000, 9999);
         }
 
-        $data = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'country_code' => $request->country_code,
-            'phone' => $request->phone,
-            'type' => $request->type,
-            'password' => bcrypt($request->password),
-            'verified_by' => $type,
-            'otp' => $token,
-        ];
+        if ($request->password == $request->password_confirmation) {
 
-        $this->fill($data);
-        $this->save();
-
-        if ($this->verified_by == 'email') {
             $data = [
-                'email' => $this->email,
-                'name' => $this->name,
-                'subject' => 'Account verification code',
+                'name' => $request->name,
+                'email' => $request->email,
+                'country_code' => $request->country_code,
+                'phone' => $request->phone,
+                'password' => bcrypt($request->password),
+                'verified_by' => $type,
+                'otp' => $token,
             ];
 
-            Helper::sendEmail('accountVerification', ['data' => $this], $data);
-        }
+            $this->fill($data);
+            $this->save();
 
-        return $this;
+            if ($this->verified_by == 'email') {
+                $data = [
+                    'email' => $this->email,
+                    'name' => $this->name,
+                    'subject' => 'Account verification code',
+                ];
+
+                Helper::sendEmail('accountVerification', ['data' => $this], $data);
+            }
+            return $this;
+        } else {
+            return 'The Password Confirmation Does Not Match';
+        }
 
     }
 
