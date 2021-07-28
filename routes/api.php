@@ -39,9 +39,11 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
 	});
 
     Route::group(['namespace' => 'Vendor', 'prefix' => 'vendors', 'middleware' => 'auth:api'], function() {
-        
+
         Route::post('store/details', 'DriverController@store');
         Route::post('update/details', 'DriverController@update');
+        Route::post('accepted-at/{id}', 'DriverController@acceptedAt');
+        Route::post('cancell-at/{id}', 'DriverController@cancellAt');
         Route::post('get-drivers-around', 'DriverController@getDriversAroud');
         Route::get('trip-req/{id}', 'DriverController@TripReq');
         Route::get('my-trips', 'DriverController@getAlltrips');

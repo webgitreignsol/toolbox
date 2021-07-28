@@ -17,7 +17,7 @@ use DB;
 
 class DriverController extends Controller
 {
-  use ApiResponse;   
+  use ApiResponse;
 
    public function store(Request $request)
    {
@@ -103,5 +103,24 @@ class DriverController extends Controller
     {
       $trip = Ride::with('passenger', 'profile' )->where('id', $id)->first();
       return response()->json(["status" => 1, "message" => 'Trip Request', "data" => $trip]);
+    }
+
+    public function acceptedAt($id)
+    {
+        $ride = Ride::find($id);
+        $ride->status = 'accepted';
+        $ride->accepted_at = date('Y-m-d H:i:s');
+        $ride->save();
+        return response()->json(["status" => 1, "message" => 'Ride Accepted', "data" => $ride]);
+    }
+
+    public function cancellAt($id)
+    {
+        $ride = Ride::find($id);
+        $ride->status = 'cancelled';
+        $ride->cancell_by = Auth::user()->id;
+        $ride->cancell_at = date('Y-m-d H:i:s');
+        $ride->save();
+        return response()->json(["status" => 1, "message" => 'Ride Cancelled', "data" => $ride]);
     }
 }
