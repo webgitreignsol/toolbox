@@ -21,8 +21,9 @@ class CreateRidesTable extends Migration
             $table->string('pick_up');
             $table->time('accepted_at');
             $table->time('start_at');
-            $table->time('cancel_at');
+            $table->time('cancell_at');
             $table->time('completed_at');
+            $table->time('cancell_by')->nullable();
             $table->integer('type');
             $table->integer('fare');
             $table->integer('status');

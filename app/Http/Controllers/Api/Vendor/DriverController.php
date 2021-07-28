@@ -13,15 +13,11 @@ use App\Trip;
 use Auth;
 use DB;
 
+
+
 class DriverController extends Controller
 {
-  use ApiResponse;
-
-   public function index()
-   {
-   		$records = DriverDetail::latest()->paginate();
-      return response()->json(["status" => 1, "message" => 'Driver Details', "data" => $records]);
-   }
+  use ApiResponse;   
 
    public function store(Request $request)
    {
@@ -141,16 +137,15 @@ class DriverController extends Controller
           }          
     }
 
-    public function getAlltrips()
+    public function getAlltrips(Request $request)
     {
-      $trips = Trip::where('driver_id', Auth::user()->id)->latest()->paginate(10);
-      return response()->json(["status" => 1, "message" => 'Driver Trips  History', "data" => $trips]);
+      $data['records'] = (new Trip())->getAlltrips($request);
+      return response()->json(["status" => 1, "message" => 'Driver Trips  History', "data" => $data]);
     }
 
     public function TripReq($id)
     {
       $trip = Ride::with('passenger', 'profile' )->where('id', $id)->first();
-
       return response()->json(["status" => 1, "message" => 'Trip Request', "data" => $trip]);
     }
 }

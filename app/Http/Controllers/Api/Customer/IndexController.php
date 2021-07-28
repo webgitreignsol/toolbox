@@ -6,13 +6,21 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Rating;
 use App\Trip;
+use App\DriverDetail;
 use Auth;
+
 class IndexController extends Controller
 {
-    public function getAlltrips()
+    public function driverDetails(Request $request, $id)
+   {
+      $records['records'] = (new DriverDetail())->getDriverDetails($request, Auth::user()->id);
+      return response()->json(["status" => 1, "message" => 'Driver Details', "data" => $records]);
+   }
+
+    public function getAlltrips(Request $request)
     {
-    	$trips = Trip::where('passneger_id', Auth::user()->id)->latest()->paginate(10);
-    	return response()->json(["status" => 1, "message" => 'Customer Trips', "data" => $trips]);       
+      $data['records'] = (new Trip())->getCustomertrips($request);
+      return response()->json(["status" => 1, "message" => 'Customer Trips  History', "data" => $data]);       
     }
 
     public function ratings(Request $request)

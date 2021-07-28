@@ -36,7 +36,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
 	});
 
     Route::group(['namespace' => 'Vendor', 'prefix' => 'vendors', 'middleware' => 'auth:api'], function() {
-        Route::get('driver/details', 'DriverController@index');
+        
         Route::post('store/details', 'DriverController@store');
         Route::post('update/details', 'DriverController@update');
         Route::post('get-drivers-around', 'DriverController@getDriversAroud');
@@ -51,6 +51,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
         Route::post('update-address/{id}', 'AddressController@update');
         Route::get('get-address', 'AddressController@getUserAddress');
         Route::get('get-alladdress', 'AddressController@index');
+        Route::get('driver/details/{id}', 'IndexController@driverDetails');
 	});
 
 });
