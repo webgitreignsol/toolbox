@@ -42,10 +42,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
 
         Route::post('store/details', 'DriverController@store');
         Route::post('update/details', 'DriverController@update');
-        Route::post('accepted-at/{id}', 'DriverController@acceptedAt');
-        Route::post('cancell-at/{id}', 'DriverController@cancellAt');
-        Route::post('completed-at/{id}', 'DriverController@completedAt');
-        Route::post('started-at/{id}', 'DriverController@startedAt');
+        Route::post('ride-status/{id}', 'DriverController@rideStatus');
         Route::post('get-drivers-around', 'DriverController@getDriversAroud');
         Route::get('trip-req/{id}', 'DriverController@TripReq');
         Route::get('my-trips', 'DriverController@getAlltrips');

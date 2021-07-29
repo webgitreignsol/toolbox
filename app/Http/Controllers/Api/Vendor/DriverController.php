@@ -105,40 +105,31 @@ class DriverController extends Controller
       return response()->json(["status" => 1, "message" => 'Trip Request', "data" => $trip]);
     }
 
-    public function acceptedAt($id)
+    public function rideStatus(Request $request,$id)
     {
         $ride = Ride::find($id);
-        $ride->status = 'accepted';
-        $ride->accepted_at = date('Y-m-d H:i:s');
-        $ride->save();
-        return response()->json(["status" => 1, "message" => 'Ride Accepted', "data" => $ride]);
-    }
-
-    public function startedAt($id)
-    {
-        $ride = Ride::find($id);
-        $ride->status = 'started';
-        $ride->start_at = date('Y-m-d H:i:s');
-        $ride->save();
-        return response()->json(["status" => 1, "message" => 'Ride Started', "data" => $ride]);
-    }
-
-    public function completedAt($id)
-    {
-        $ride = Ride::find($id);
-        $ride->status = 'completed';
-        $ride->completed_at = date('Y-m-d H:i:s');
-        $ride->save();
-        return response()->json(["status" => 1, "message" => 'Ride Completed', "data" => $ride]);
-    }
-
-    public function cancellAt($id)
-    {
-        $ride = Ride::find($id);
-        $ride->status = 'cancelled';
-        $ride->cancell_by = Auth::user()->id;
-        $ride->cancell_at = date('Y-m-d H:i:s');
-        $ride->save();
-        return response()->json(["status" => 1, "message" => 'Ride Cancelled', "data" => $ride]);
+        $status = $request->status;
+        if ($status == 'accepted') {
+            $ride->status = $status;
+            $ride->accepted_at = date('Y-m-d H:i:s');
+            $ride->save();
+            return response()->json(["status" => 1, "message" => 'Ride Accepted', "data" => $ride]);
+        } elseif ($status == 'started'){
+            $ride->status = $status;
+            $ride->start_at = date('Y-m-d H:i:s');
+            $ride->save();
+            return response()->json(["status" => 1, "message" => 'Ride Started', "data" => $ride]);
+        }elseif ($status == 'completed'){
+            $ride->status = $status;
+            $ride->completed_at = date('Y-m-d H:i:s');
+            $ride->save();
+            return response()->json(["status" => 1, "message" => 'Ride Completed', "data" => $ride]);
+        }elseif ($status == 'cancelled'){
+            $ride->status = $status;
+            $ride->cancell_by = Auth::user()->id;
+            $ride->cancell_at = date('Y-m-d H:i:s');
+            $ride->save();
+            return response()->json(["status" => 1, "message" => 'Ride Cancelled', "data" => $ride]);
+        }
     }
 }
