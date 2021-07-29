@@ -12,7 +12,7 @@ class Trip extends Model
 {
 	use LogsActivity;
 
-    protected $fillable = ['date', 'time', 'pickup', 'drop_off', 'vehicle_type', 'fare', 'driver_id', 'passenger_id', 'status'];
+    protected $fillable = ['date', 'time', 'pickup', 'drop_off', 'vehicle_type','ride_type', 'fare', 'driver_id', 'passenger_id', 'status'];
 
     public function getAlltrips($request)
     {

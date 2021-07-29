@@ -99,6 +99,12 @@ class DriverController extends Controller
       return response()->json(["status" => 1, "message" => 'Driver Trips  History', "data" => $data]);
     }
 
+    public function getScheduledtrips(Request $request)
+    {
+      $data['records'] = (new Ride())->getScheduledtrips($request);
+      return response()->json(["status" => 1, "message" => 'Driver Trips  History', "data" => $data]);
+    }
+
     public function TripReq($id)
     {
       $trip = Ride::with('passenger', 'profile' )->where('id', $id)->first();
@@ -128,6 +134,7 @@ class DriverController extends Controller
             $ride->status = $status;
             $ride->cancell_by = Auth::user()->id;
             $ride->cancell_at = date('Y-m-d H:i:s');
+            $ride->remarks =$request->remarks;
             $ride->save();
             return response()->json(["status" => 1, "message" => 'Ride Cancelled', "data" => $ride]);
         }

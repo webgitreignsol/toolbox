@@ -46,6 +46,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
         Route::post('get-drivers-around', 'DriverController@getDriversAroud');
         Route::get('trip-req/{id}', 'DriverController@TripReq');
         Route::get('my-trips', 'DriverController@getAlltrips');
+        Route::get('scheduled-trips', 'DriverController@getScheduledtrips');
     });
 
 	Route::group(['namespace' => 'Customer', 'prefix' => 'customer', 'middleware' => 'auth:api'], function() {

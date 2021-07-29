@@ -11,12 +11,20 @@ class Ride extends Model
 	use LogsActivity;
 	
 	protected $appends = ['fares'];
-    protected $fillable = ['passenger_id', 'driver_id', 'drop_off', 'pick_up', 'accepted_at', 'start_at',  'cancell_at', 'completed_at', 'cancell_by', 'type', 'fare', 'status'];
+    protected $fillable = ['passenger_id', 'driver_id', 'drop_off', 'pick_up', 'accepted_at', 'start_at',
+    						'cancell_at', 'completed_at', 'cancell_by', 'type', 'fare', 'status', 'parent_id', 'remarks'
+    					];
 
 
     public function getFaresAttribute($val) {
         $fare = Fare::first();
         return $fare;
+    }
+
+    public function getScheduledtrips($request)
+    {
+      $trips = $this::where('driver_id', \Auth::user()->id)->where('type', 0)->where('start_at', '>', now())->latest()->paginate(10);      
+      return $trips;
     }
 
 	public function passenger()
