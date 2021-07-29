@@ -114,6 +114,11 @@ class DriverController extends Controller
     public function rideStatus(Request $request,$id)
     {
         $ride = Ride::find($id);
+        $validator = Validator::make($request->all(), ['status' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(["status" => 0, "message" => $validator->errors()]);
+        }
         $status = $request->status;
         if ($status == 'accepted') {
             $ride->status = $status;
