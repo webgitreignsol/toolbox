@@ -63,7 +63,8 @@ class IndexController extends Controller
                 * cos(radians(longitude) - radians(" . $lon . "))
                 + sin(radians(" .$lat. "))
                 * sin(radians(latitude))) AS distance"))
-                ->where("driver_details.car_photo", $request->car_photo)
+                ->where('driver_details.car_photo', $request->car_photo)
+                ->where('user_profiles.status', 1)
                 ->having("distance", "<" , $distance);
 
             if ($limit || $offset) {

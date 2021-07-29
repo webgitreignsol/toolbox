@@ -11,8 +11,8 @@ class Ride extends Model
 	use LogsActivity;
 	
 	protected $appends = ['fares'];
-    protected $fillable = ['passenger_id', 'driver_id', 'drop_off', 'pick_up', 'accepted_at', 'start_at',
-    						'cancell_at', 'completed_at', 'cancell_by', 'type', 'fare', 'status', 'parent_id', 'remarks'
+    protected $fillable = ['passenger_id', 'driver_id', 'drop_off', 'pick_up', 'accepted_at', 'start_at','cancell_at', 
+    						'completed_at', 'cancell_by', 'type', 'fare', 'status', 'parent_id', 'remarks', 'penality'
     					];
 
 

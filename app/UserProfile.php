@@ -15,9 +15,9 @@ class UserProfile extends Model
   use LogsActivity;
 	
 	  protected $table = 'user_profiles';			
-   	protected $fillable = ['image', 'bio','location', 'longitude', 'latitude','user_id'];
+   	protected $fillable = ['image', 'bio','location', 'longitude', 'latitude','user_id', 'status'];
 
-    protected static $logAttributes = ['image', 'bio','location', 'longitude', 'latitude','user_id'];
+    protected static $logAttributes = ['image', 'bio','location', 'longitude', 'latitude','user_id', 'status'];
     protected static $logName = 'UserProfile';
     protected static $logOnlyDirty = true;          
 
