@@ -17,7 +17,8 @@ class DriverDetail extends Model
    			'driver_contact' 			    => 'required',
    			'driver_photo' 				    => 'required',
    			'car_photo' 				      => 'required',
-   			'car_make' 					      => 'required',
+            'car_make' 					      => 'required',
+            'car_type' 					      => 'required',
    			'car_registration_number' => 'required'
    			]);
 

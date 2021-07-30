@@ -38,7 +38,7 @@ class DriverController extends Controller
    		$crimage->move(public_path('assets/admin/carImg'), $cr_img);
 
    		$auth_id = Auth::user()->id;
-      $driver = DriverDetail::where('driver_id', $auth_id)->first();
+       $driver = DriverDetail::where('driver_id', $auth_id)->first();
    		$arr = array(
      			'driver_contact' 			   => $request->driver_contact,
      			'driver_photo' 				   => $dr_img,
