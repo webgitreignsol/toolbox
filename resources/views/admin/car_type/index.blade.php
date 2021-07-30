@@ -16,7 +16,8 @@
                     <thead>
                       <tr>
                         <th>No</th>
-                        <th>Name</th>
+                          <th>Name</th>
+                          <th>Capacity</th>
                           <th>Description</th>
                           <th>Actions</th>
                       </tr>
@@ -25,7 +26,8 @@
                       @foreach ($types as $key => $type)
                       <tr>
                         <td>{{ $key + 1 }}</td>
-                        <td>{{ $type->name }}</td>
+                          <td>{{ $type->name }}</td>
+                          <td>{{ $type->capacity }}</td>
                         <td>{{ $type->description }}</td>
                         <td>
                             @can('car-edit')

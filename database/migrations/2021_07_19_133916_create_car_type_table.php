@@ -17,6 +17,7 @@ class CreateCarTypeTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
+            $table->string('capacity');
             $table->timestamps();
         });
     }

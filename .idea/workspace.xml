@@ -3,6 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="a23d6c7c-a42a-42b2-b998-8ad1ffa5244f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Vendor/DriverController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Vendor/DriverController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_07_15_132732_create_driver_details_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_07_15_132732_create_driver_details_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_07_19_133916_create_car_type_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_07_19_133916_create_car_type_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/car_type/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/car_type/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/car_type/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/car_type/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/car_type/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/car_type/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,7 +204,8 @@
       <workItem from="1627305817897" duration="15705000" />
       <workItem from="1627374862779" duration="21188000" />
       <workItem from="1627461116561" duration="26739000" />
-      <workItem from="1627546751028" duration="19709000" />
+      <workItem from="1627546751028" duration="34984000" />
+      <workItem from="1627635515764" duration="5600000" />
     </task>
     <servers />
   </component>

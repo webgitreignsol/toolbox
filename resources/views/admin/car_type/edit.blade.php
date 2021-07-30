@@ -18,6 +18,12 @@
                     {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
                   </div>
                 </div>
+                    <div class="form-group row mb-4">
+                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Capacity</label>
+                        <div class="col-sm-12 col-md-7">
+                            {!! Form::number('capacity', null, array('placeholder' => 'Capacity','class' => 'form-control')) !!}
+                        </div>
+                    </div>
                 <div class="form-group row mb-4">
                   <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Description</label>
                   <div class="col-sm-12 col-md-7">

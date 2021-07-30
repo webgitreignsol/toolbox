@@ -21,6 +21,7 @@ class CreateDriverDetailsTable extends Migration
             $table->string('car_make');
             $table->string('car_registration_number');
             $table->integer('driver_id');
+            $table->string('car_type');
             $table->timestamps();
         });
     }

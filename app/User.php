@@ -358,6 +358,17 @@ class User extends Authenticatable
         return $record;
     }
 
+    public function getProfile($request, $id)
+    {
+        $record = $this->find($id);
+
+        if (!$record) {
+            return 'Unauthorized';
+        }
+
+        return (new GetUserProfile($record))->resolve();
+    }
+
     public function updateProfile($request, $id)
     {
         $validator = Validator::make($request->all(), [
@@ -396,17 +407,6 @@ class User extends Authenticatable
         }
 
         return $record;
-    }
-
-    public function getProfile($request, $id)
-    {
-        $record = $this->find($id);
-
-        if (!$record) {
-            return 'Unauthorized';
-        }
-
-        return (new GetUserProfile($record))->resolve();
     }
 
     public function userFacebookAuth($request)

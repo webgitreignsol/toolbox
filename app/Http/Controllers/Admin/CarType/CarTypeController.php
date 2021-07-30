@@ -37,6 +37,7 @@ class CarTypeController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
+            'capacity' => 'required',
             'description' => 'required'
         ]);
 
@@ -73,6 +74,7 @@ class CarTypeController extends Controller
 
         $this->validate($request, [
             'name' => 'required',
+            'capacity' => 'required',
             'description' => 'required'
         ]);
 

@@ -44,17 +44,18 @@ class DriverController extends Controller
      			'driver_photo' 				   => $dr_img,
      			'car_photo' 				     => $cr_img,
      			'car_make' 					     => $request->car_make,
-     			'car_registration_number'=> $request->car_registration_number,
+                'car_registration_number'=>    $request->car_registration_number,
+                'car_type'=>                  $request->car_type,
      			'driver_id' 				     => Auth::user()->id
    			);
 
       if ($driver == null) {
-      
+
         DriverDetail::create($arr);
-      
+
       }else{
         DriverDetail::where('driver_id', $auth_id)->update($arr);
-        
+
       }
       	return response()->json([
           'message'     => 'Success',
