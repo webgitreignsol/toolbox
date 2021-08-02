@@ -13,8 +13,6 @@ use App\Trip;
 use Auth;
 use DB;
 
-
-
 class DriverController extends Controller
 {
   use ApiResponse;
@@ -38,24 +36,20 @@ class DriverController extends Controller
    		$crimage->move(public_path('assets/admin/carImg'), $cr_img);
 
    		$auth_id = Auth::user()->id;
-       $driver = DriverDetail::where('driver_id', $auth_id)->first();
+      $driver = DriverDetail::where('driver_id', $auth_id)->first();
    		$arr = array(
      			'driver_contact' 			   => $request->driver_contact,
      			'driver_photo' 				   => $dr_img,
      			'car_photo' 				     => $cr_img,
      			'car_make' 					     => $request->car_make,
-                'car_registration_number'=>    $request->car_registration_number,
-                'car_type'=>                  $request->car_type,
+     			'car_registration_number'=> $request->car_registration_number,
      			'driver_id' 				     => Auth::user()->id
    			);
 
-      if ($driver == null) {
-
-        DriverDetail::create($arr);
-
+      if ($driver == null) {      
+        DriverDetail::create($arr);      
       }else{
-        DriverDetail::where('driver_id', $auth_id)->update($arr);
-
+        DriverDetail::where('driver_id', $auth_id)->update($arr);        
       }
       	return response()->json([
           'message'     => 'Success',

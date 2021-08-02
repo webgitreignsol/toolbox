@@ -11,23 +11,22 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class DriverDetail extends Model
 {
 	use LogsActivity;
-    protected $fillable = ['driver_contact', 'driver_photo', 'car_photo', 'car_make','car_type', 'car_registration_number', 'driver_id'];
+    protected $fillable = ['driver_contact', 'driver_photo', 'car_photo', 'car_make', 'car_registration_number', 'driver_id'];
 
     public static $rules = ([
    			'driver_contact' 			    => 'required',
    			'driver_photo' 				    => 'required',
    			'car_photo' 				      => 'required',
-            'car_make' 					      => 'required',
-            'car_type' 					      => 'required',
-   			'car_registration_number' => 'required'
+   			'car_make' 					      => 'required',
+   			'car_registration_number' => 'required'   			
    			]);
 
     public function getDriverDetails($request, $id)
-   {
+   {           
       $records = $this::where('id', $id)->first();
       return (new ViewDriver($records))->resolve();
-
-   }
+      
+   } 
 
     public function driver()
     {

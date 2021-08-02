@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use App\Http\Resources\Frontend\Trip\Customer\mytrip as tripDetails;
+use App\Http\Resources\Frontend\Trip\Vendor\mytrip as drivertripDetails;
 
 class Ride extends Model
 {
@@ -12,13 +13,20 @@ class Ride extends Model
 	
 	protected $appends = ['fares'];
     protected $fillable = ['passenger_id', 'driver_id', 'drop_off', 'pick_up', 'accepted_at', 'start_at','cancell_at', 
-    						'completed_at', 'cancell_by', 'type', 'fare', 'status', 'parent_id', 'remarks', 'penality'
-    					];
+    						'completed_at', 'cancell_by', 'type', 'fare', 'status', 'parent_id', 'remarks', 'penality'];
 
-
-    public function getFaresAttribute($val) {
+    public function getFaresAttribute($val) 
+    {
         $fare = Fare::first();
         return $fare;
+    }
+
+    public function getAlltrips($request)
+    {
+      $type = $request->trips;
+      $trips = Ride::where('driver_id', \Auth::user()->id)->where('type', 'LIKE', "%{$type}%")->latest()->paginate(10);
+      $result = drivertripDetails::collection($trips)->toArray($request);
+      return $result;
     }
 
     public function getScheduledtrips($request)

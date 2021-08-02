@@ -45,7 +45,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
         Route::post('ride-status/{id}', 'DriverController@rideStatus');
         Route::post('get-drivers-around', 'DriverController@getDriversAroud');
         Route::get('trip-req/{id}', 'DriverController@TripReq');
-        Route::get('my-trips', 'DriverController@getAlltrips');
+        Route::post('my-trips', 'DriverController@getAlltrips');
         Route::get('scheduled-trips', 'DriverController@getScheduledtrips');
     });
 

@@ -16,7 +16,8 @@ class Trip extends Model
 
     public function getAlltrips($request)
     {
-      $trips = Trip::where('driver_id', \Auth::user()->id)->latest()->paginate(10);
+      $type = $request->trips;
+      $trips = Ride::where('driver_id', \Auth::user()->id)->where('type', 'LIKE', "%{$type}%")->latest()->paginate(10);
       $result = drivertripDetails::collection($trips)->toArray($request);
       return $result;
     }

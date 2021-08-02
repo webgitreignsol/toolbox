@@ -10,6 +10,6 @@ class CarType extends Model
 	use LogsActivity;
     protected $table = 'car_type';
 
-    protected $fillable = ['name','capacity', 'description'];
+    protected $fillable = ['name', 'description'];
 
 }
