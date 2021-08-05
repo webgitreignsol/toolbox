@@ -12,11 +12,7 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $sum = Order::sum('ride_fare');
-        $orders = Order::latest()->paginate(10);
-        $ride = Order::where('parent_id', null)->count();
-        $revenue = Commission::pluck('value')->first();
-    	return view ('admin.dashboard.index', compact('orders', 'sum', 'revenue', 'ride'));
+    	return view ('admin.dashboard.index');
     }
 }
 

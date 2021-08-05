@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Admin Dashboard | Will Go Transportation</title>
+  <title>Admin Dashboard | ToolBox</title>
 
   <!-- General CSS Files index -->
   <link rel="stylesheet" href="{{ asset('public/assets/admin/css/app.min.css') }}">
@@ -23,9 +23,6 @@
   <link rel="stylesheet" href="{{ asset('public/assets/admin/css/custom.css') }}">
   <link rel='shortcut icon' type='image/x-icon' href="{{ asset('public/assets/admin/img/favicon.ico') }}">
   <link rel="stylesheet" href="{{ asset('public/assets/admin/backend/css/toastr.min.css') }}">
-  <!-- datetimepicker -->
-  <link rel="stylesheet" href="{{ asset('public/assets/admin/bundles/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}">
-  <link rel="stylesheet" href="{{ asset('public/assets/admin/bundles/bootstrap-daterangepicker/daterangepicker.css')}}">
 </head>
 
 <body>
@@ -142,16 +139,16 @@
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
             <a href="#"> <img alt="image" src="{{ asset('public/assets/admin/img/logo.png') }}" class="header-logo" /> <span
-                class="logo-name">WillGo</span>
+                class="logo-name">ToolBox</span>
             </a>
           </div>
           <ul class="sidebar-menu">
             <li class="menu-header">Main</li>
 
-            <li >
-              <a href="{{ route('dashboard') }}" ><i data-feather="monitor"></i><span>Dashboard</span></a>
+              <li >
+                  <a href="{{ route('dashboard') }}" ><i data-feather="monitor"></i><span>Dashboard</span></a>
 
-            </li>
+              </li>
 
             @if(Gate::check('role-list') || Gate::check('role-create'))
             <li class="dropdown {{ Request::is('admin/roles', 'admin/roles/create') ? 'active' : '' }}">
@@ -194,88 +191,111 @@
               </ul>
             </li>
             @endif
-            @if(Gate::check('driver-list') || Gate::check('driver-create'))
-              <li class="dropdown {{ Request::is('admin/drivers', 'admin/drivers/create') ? 'active' : '' }}">
-                  <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="user-check"></i><span>Drivers</span></a>
-                  <ul class="dropdown-menu">
-                      @can('driver-list')
-                          <li class="{{ Request::is('admin/drivers') ? 'active' : '' }}"><a class="nav-link" href="{{ route('drivers.index') }}">All Drivers</a></li>
-                      @endcan
-                      @can('driver-create')
-                          <li class="{{ Request::is('admin/drivers/create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('drivers.create') }}">Add Driver</a></li>
-                      @endcan
-                      @can('driver-list')
-                          <li class="{{ Request::is('admin/drivers/session') ? 'active' : '' }}"><a class="nav-link" href="{{ route('drivers.session') }}">All Sessions</a></li>
-                      @endcan
-                  </ul>
-              </li>
-            @endif
 
-            @if(Gate::check('passenger-list') || Gate::check('passenger-create'))
-              <li class="dropdown {{ Request::is('admin/passengers', 'admin/passengers/create') ? 'active' : '' }}">
-                  <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="user-check"></i><span>Passengers</span></a>
-                  <ul class="dropdown-menu">
-                      @can('passenger-list')
-                          <li class="{{ Request::is('admin/passengers') ? 'active' : '' }}"><a class="nav-link" href="{{ route('passengers.index') }}">All Passengers</a></li>
-                      @endcan
-                      @can('passenger-create')
-                          <li class="{{ Request::is('admin/passengers/create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('passengers.create') }}">Add Passenger</a></li>
-                      @endcan
-                  </ul>
-              </li>
-            @endif
-              @if(Gate::check('car-list') || Gate::check('car-create'))
-                  <li class="dropdown {{ Request::is('admin/car', 'admin/car/create') ? 'active' : '' }}">
-                      <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="type"></i><span>Vehicle</span></a>
+              @if(Gate::check('product-list') || Gate::check('product-create'))
+                  <li class="dropdown {{ Request::is('admin/product', 'admin/product/create') ? 'active' : '' }}">
+                      <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="cpu"></i><span>Product Management</span></a>
                       <ul class="dropdown-menu">
-                          @can('car-list')
-                              <li class="{{ Request::is('admin/car') ? 'active' : '' }}"><a class="nav-link" href="{{ route('car.index') }}">All Car Types</a></li>
+                          @can('product-list')
+                              <li class="{{ Request::is('admin/product') ? 'active' : '' }}"><a class="nav-link" href="{{ route('product.index') }}">All Product</a></li>
                           @endcan
-                          @can('car-create')
-                              <li class="{{ Request::is('admin/car/create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('car.create') }}">Add Car Type</a></li>
+                          @can('product-create')
+                              <li class="{{ Request::is('admin/product/create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('product.create') }}">Add Product</a></li>
                           @endcan
                       </ul>
                   </li>
               @endif
-             @if(Gate::check('ride-list'))
-              <li class="dropdown {{ Request::is('admin/rides','admin/rides/accepted', 'admin/rides/completed', 'admin/rides/cancelled') ? 'active' : '' }}">
-                  <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="truck"></i><span>Rides Management</span></a>
-                  <ul class="dropdown-menu">
-                      @can('ride-list')
-                          <li class="{{ Request::is('admin/rides') ? 'active' : '' }}"><a class="nav-link" href="{{ route('rides.index') }}">All Rides</a></li>
-                      @endcan
-                      @can('ride-list')
-                          <li class="{{ Request::is('admin/rides/accepted') ? 'active' : '' }}"><a class="nav-link" href="{{ route('rides.accepted') }}">Accepted Rides</a></li>
-                      @endcan
-                      @can('ride-list')
-                          <li class="{{ Request::is('admin/rides/completed') ? 'active' : '' }}"><a class="nav-link" href="{{ route('rides.completed') }}">Completed Rides</a></li>
-                      @endcan
-                      @can('ride-list')
-                          <li class="{{ Request::is('admin/rides/cancelled') ? 'active' : '' }}"><a class="nav-link" href="{{ route('rides.cancelled') }}">Cancelled Rides</a></li>
-                      @endcan
-                  </ul>
-              </li>
-            @endif
-             @if(Gate::check('report-list'))
-                  <li class="dropdown {{ Request::is('admin/reports/rides') ? 'active' : '' }}">
-                      <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="book"></i><span>Reports</span></a>
+              @if(Gate::check('order-list'))
+                  <li class="dropdown {{ Request::is('admin/order', 'admin/order/create') ? 'active' : '' }}">
+                      <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="circle"></i><span>Order Management</span></a>
                       <ul class="dropdown-menu">
-                              <li class="{{ Request::is('admin/reports.rides') ? 'active' : '' }}"><a class="nav-link" href="{{ route('reports.index') }}">Rides & Revenue</a></li>
+                          @can('order-list')
+                              <li class="{{ Request::is('admin/order') ? 'active' : '' }}"><a class="nav-link" href="{{ route('order.index') }}">All Orders</a></li>
+                          @endcan
                       </ul>
                   </li>
               @endif
-              @if(Gate::check('setting-list'))
-                  <li class="dropdown {{ Request::is('admin/fare', 'admin/passengers/create') ? 'active' : '' }}">
-                      <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="settings"></i><span>Settings</span></a>
+
+              @if(Gate::check('ride-list'))
+                  <li class="dropdown {{ Request::is('admin/rides', 'admin/rides/create') ? 'active' : '' }}">
+                      <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="hard-drive"></i><span>Rides Management</span></a>
                       <ul class="dropdown-menu">
-                          <li class="{{ Request::is('admin/fare') ? 'active' : '' }}"><a class="nav-link" href="{{ route('fare.edit') }}">Fare Management</a></li>
-                          <li class="{{ Request::is('admin/commission') ? 'active' : '' }}"><a class="nav-link" href="{{ route('commission.edit') }}">Commission Management</a></li>
+                          @can('ride-list')
+                              <li class="{{ Request::is('admin/rides') ? 'active' : '' }}"><a class="nav-link" href="{{ route('rides.cancelled') }}">Cancelled Rides</a></li>
+                          @endcan
                       </ul>
                   </li>
               @endif
+
+              @if(Gate::check('rider-list'))
+                  <li class="dropdown {{ Request::is('admin/rider', 'admin/rider/create') ? 'active' : '' }}">
+                      <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="user-check"></i><span>Rider Management</span></a>
+                      <ul class="dropdown-menu">
+                          @can('rider-list')
+                              <li class="{{ Request::is('admin/rider') ? 'active' : '' }}"><a class="nav-link" href="{{ route('rider.index') }}">All Riders</a></li>
+                          @endcan
+                          @can('rider-create')
+                              <li class="{{ Request::is('admin/rider/create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('rider.create') }}">Add Rider</a></li>
+                          @endcan
+                      </ul>
+                  </li>
+              @endif
+
+              @if(Gate::check('vendor-list'))
+                  <li class="dropdown {{ Request::is('admin/vendor', 'admin/vendor/create') ? 'active' : '' }}">
+                      <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="user-check"></i><span>Vendor Management</span></a>
+                      <ul class="dropdown-menu">
+                          @can('vendor-list')
+                              <li class="{{ Request::is('admin/vendor') ? 'active' : '' }}"><a class="nav-link" href="{{ route('vendor.index') }}">All Vendors</a></li>
+                          @endcan
+                              @can('vendor-create')
+                                  <li class="{{ Request::is('admin/vendor/create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('vendor.create') }}">Add Vendor</a></li>
+                              @endcan
+                      </ul>
+                  </li>
+              @endif
+
+              @if(Gate::check('shop-list'))
+                  <li class="dropdown {{ Request::is('admin/shop', 'admin/shop/create') ? 'active' : '' }}">
+                      <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="shopping-cart"></i><span>Shop</span></a>
+                      <ul class="dropdown-menu">
+                          @can('shop-list')
+                              <li class="{{ Request::is('admin/shop') ? 'active' : '' }}"><a class="nav-link" href="{{ route('shop.index') }}">All Shops</a></li>
+                          @endcan
+                          @can('shop-create')
+                              <li class="{{ Request::is('admin/shop/create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('shop.create') }}">Add Shop</a></li>
+                          @endcan
+                      </ul>
+                  </li>
+              @endif
+
+              @if(Gate::check('category-list'))
+                  <li class="dropdown {{ Request::is('admin/category', 'admin/category/create') ? 'active' : '' }}">
+                      <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="zap"></i><span>Categories</span></a>
+                      <ul class="dropdown-menu">
+                          @can('category-list')
+                              <li class="{{ Request::is('admin/category') ? 'active' : '' }}"><a class="nav-link" href="{{ route('category.index') }}">All Categories</a></li>
+                          @endcan
+                          @can('category-create')
+                              <li class="{{ Request::is('admin/category/create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('category.create') }}">Add Category</a></li>
+                          @endcan
+                      </ul>
+                  </li>
+              @endif
+
+              @if(Gate::check('account-list'))
+                  <li class="dropdown {{ Request::is('admin/user', 'admin/user/change_password') ? 'active' : '' }}">
+                      <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="user"></i><span>My Account</span></a>
+                      <ul class="dropdown-menu">
+                              <li class="{{ Request::is('admin/user/change_password') ? 'active' : '' }}"><a class="nav-link" href="{{ route('users.password') }}">Change Password</a></li>
+                      </ul>
+                  </li>
+              @endif
+
           </ul>
         </aside>
       </div>
+
       <!-- Main Content -->
       <div class="main-content">
         @yield('content')
@@ -314,9 +334,6 @@
   <!-- Custom JS File -->
   <script src="{{ asset('public/assets/admin/js/custom.js') }}"></script>
   <script src="{{ asset('public/assets/admin/backend/js/toastr.min.js') }}"></script>
-  <!-- datetimpepicker -->
-   <script src="{{ asset('public/assets/admin/bundles/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>
-  <script src="{{ asset('public/assets/admin/bundles/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
   {!! Toastr::message() !!}
 
   <script>

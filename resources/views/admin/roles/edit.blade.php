@@ -109,7 +109,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Admins</td>
+                            <td>Users</td>
                             <td>
                                 <div class="pretty p-icon p-jelly p-round p-bigger">
                                   {{ Form::checkbox('permission[user-list]', 'user-list', $role->hasPermissionTo('user-list')) }}
@@ -147,90 +147,11 @@
                                 </div>
                             </td>
                         </tr>
-                    <tr>
-                        <td>Drivers</td>
-                        <td>
-                            <div class="pretty p-icon p-jelly p-round p-bigger">
-                                {{ Form::checkbox('permission[driver-list]', 'driver-list', $role->hasPermissionTo('driver-list')) }}
-                                <div class="state p-info">
-                                    <i class="icon material-icons">done</i>
-                                    <label>List</label>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="pretty p-icon p-jelly p-round p-bigger">
-                                {{ Form::checkbox('permission[driver-create]', 'driver-create', $role->hasPermissionTo('driver-create')) }}
-                                <div class="state p-info">
-                                    <i class="icon material-icons">done</i>
-                                    <label>Create</label>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="pretty p-icon p-jelly p-round p-bigger">
-                                {{ Form::checkbox('permission[driver-edit]', 'driver-edit', $role->hasPermissionTo('driver-edit')) }}
-                                <div class="state p-info">
-                                    <i class="icon material-icons">done</i>
-                                    <label>Edit</label>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="pretty p-icon p-jelly p-round p-bigger">
-                                {{ Form::checkbox('permission[driver-delete]', 'driver-delete', $role->hasPermissionTo('driver-delete')) }}
-                                <div class="state p-info">
-                                    <i class="icon material-icons">done</i>
-                                    <label>Delete</label>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Passengers</td>
-                        <td>
-                            <div class="pretty p-icon p-jelly p-round p-bigger">
-                                {{ Form::checkbox('permission[passenger-list]', 'passenger-list', $role->hasPermissionTo('passenger-list')) }}
-                                <div class="state p-info">
-                                    <i class="icon material-icons">done</i>
-                                    <label>List</label>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="pretty p-icon p-jelly p-round p-bigger">
-                                {{ Form::checkbox('permission[passenger-create]', 'passenger-create', $role->hasPermissionTo('passenger-create')) }}
-                                <div class="state p-info">
-                                    <i class="icon material-icons">done</i>
-                                    <label>Create</label>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="pretty p-icon p-jelly p-round p-bigger">
-                                {{ Form::checkbox('permission[passenger-edit]', 'passenger-edit', $role->hasPermissionTo('passenger-edit')) }}
-                                <div class="state p-info">
-                                    <i class="icon material-icons">done</i>
-                                    <label>Edit</label>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="pretty p-icon p-jelly p-round p-bigger">
-                                {{ Form::checkbox('permission[passenger-delete]', 'passenger-delete', $role->hasPermissionTo('passenger-delete')) }}
-                                <div class="state p-info">
-                                    <i class="icon material-icons">done</i>
-                                    <label>Delete</label>
-                                </div>
-                            </div>
-                        </td>
-
-                    </tr>
                         <tr>
-                            <td>Car Type</td>
+                            <td>Products Management</td>
                             <td>
                                 <div class="pretty p-icon p-jelly p-round p-bigger">
-                                    {{ Form::checkbox('permission[car-list]', 'car-list', $role->hasPermissionTo('car-list')) }}
+                                    {{ Form::checkbox('permission[product-list]', 'product-list', $role->hasPermissionTo('product-list')) }}
                                     <div class="state p-info">
                                         <i class="icon material-icons">done</i>
                                         <label>List</label>
@@ -239,7 +160,7 @@
                             </td>
                             <td>
                                 <div class="pretty p-icon p-jelly p-round p-bigger">
-                                    {{ Form::checkbox('permission[car-create]', 'car-create', $role->hasPermissionTo('car-create')) }}
+                                    {{ Form::checkbox('permission[product-create]', 'product-create', $role->hasPermissionTo('product-create')) }}
                                     <div class="state p-info">
                                         <i class="icon material-icons">done</i>
                                         <label>Create</label>
@@ -248,7 +169,7 @@
                             </td>
                             <td>
                                 <div class="pretty p-icon p-jelly p-round p-bigger">
-                                    {{ Form::checkbox('permission[car-edit]', 'car-edit', $role->hasPermissionTo('car-edit')) }}
+                                    {{ Form::checkbox('permission[product-edit]', 'product-edit', $role->hasPermissionTo('product-edit')) }}
                                     <div class="state p-info">
                                         <i class="icon material-icons">done</i>
                                         <label>Edit</label>
@@ -257,7 +178,7 @@
                             </td>
                             <td>
                                 <div class="pretty p-icon p-jelly p-round p-bigger">
-                                    {{ Form::checkbox('permission[car-delete]', 'car-delete', $role->hasPermissionTo('car-delete')) }}
+                                    {{ Form::checkbox('permission[product-delete]', 'product-delete', $role->hasPermissionTo('product-delete')) }}
                                     <div class="state p-info">
                                         <i class="icon material-icons">done</i>
                                         <label>Delete</label>
@@ -265,23 +186,167 @@
                                 </div>
                             </td>
                         </tr>
-                    <tr>
-                      <td>Rides</td>
-                      <td>
-                            <div class="pretty p-icon p-jelly p-round p-bigger">
-                                {{ Form::checkbox('permission[ride-list]', 'ride-list', $role->hasPermissionTo('ride-list')) }}
-                                <div class="state p-info">
-                                    <i class="icon material-icons">done</i>
-                                    <label>Rides</label>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
                         <tr>
-                            <td>Setting</td>
+                            <td>Vendors Management</td>
                             <td>
                                 <div class="pretty p-icon p-jelly p-round p-bigger">
-                                    {{ Form::checkbox('permission[setting-list]', 'setting-list', $role->hasPermissionTo('setting-list')) }}
+                                    {{ Form::checkbox('permission[vendor-list]', 'vendor-list', $role->hasPermissionTo('vendor-list')) }}
+                                    <div class="state p-info">
+                                        <i class="icon material-icons">done</i>
+                                        <label>List</label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="pretty p-icon p-jelly p-round p-bigger">
+                                    {{ Form::checkbox('permission[vendor-create]', 'vendor-create', $role->hasPermissionTo('vendor-create')) }}
+                                    <div class="state p-info">
+                                        <i class="icon material-icons">done</i>
+                                        <label>Create</label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="pretty p-icon p-jelly p-round p-bigger">
+                                    {{ Form::checkbox('permission[vendor-edit]', 'vendor-edit', $role->hasPermissionTo('vendor-edit')) }}
+                                    <div class="state p-info">
+                                        <i class="icon material-icons">done</i>
+                                        <label>Edit</label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="pretty p-icon p-jelly p-round p-bigger">
+                                    {{ Form::checkbox('permission[vendor-delete]', 'vendor-delete', $role->hasPermissionTo('vendor-delete')) }}
+                                    <div class="state p-info">
+                                        <i class="icon material-icons">done</i>
+                                        <label>Delete</label>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Shop</td>
+                            <td>
+                                <div class="pretty p-icon p-jelly p-round p-bigger">
+                                    {{ Form::checkbox('permission[shop-list]', 'shop-list', $role->hasPermissionTo('shop-list')) }}
+                                    <div class="state p-info">
+                                        <i class="icon material-icons">done</i>
+                                        <label>List</label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="pretty p-icon p-jelly p-round p-bigger">
+                                    {{ Form::checkbox('permission[shop-create]', 'shop-create', $role->hasPermissionTo('shop-create')) }}
+                                    <div class="state p-info">
+                                        <i class="icon material-icons">done</i>
+                                        <label>Create</label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="pretty p-icon p-jelly p-round p-bigger">
+                                    {{ Form::checkbox('permission[shop-edit]', 'shop-edit', $role->hasPermissionTo('shop-edit')) }}
+                                    <div class="state p-info">
+                                        <i class="icon material-icons">done</i>
+                                        <label>Edit</label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="pretty p-icon p-jelly p-round p-bigger">
+                                    {{ Form::checkbox('permission[shop-delete]', 'shop-delete', $role->hasPermissionTo('shop-delete')) }}
+                                    <div class="state p-info">
+                                        <i class="icon material-icons">done</i>
+                                        <label>Delete</label>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Category</td>
+                            <td>
+                                <div class="pretty p-icon p-jelly p-round p-bigger">
+                                    {{ Form::checkbox('permission[category-list]', 'category-list', $role->hasPermissionTo('category-list')) }}
+                                    <div class="state p-info">
+                                        <i class="icon material-icons">done</i>
+                                        <label>List</label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="pretty p-icon p-jelly p-round p-bigger">
+                                    {{ Form::checkbox('permission[category-create]', 'category-create', $role->hasPermissionTo('category-create')) }}
+                                    <div class="state p-info">
+                                        <i class="icon material-icons">done</i>
+                                        <label>Create</label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="pretty p-icon p-jelly p-round p-bigger">
+                                    {{ Form::checkbox('permission[category-edit]', 'category-edit', $role->hasPermissionTo('category-edit')) }}
+                                    <div class="state p-info">
+                                        <i class="icon material-icons">done</i>
+                                        <label>Edit</label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="pretty p-icon p-jelly p-round p-bigger">
+                                    {{ Form::checkbox('permission[category-delete]', 'category-delete', $role->hasPermissionTo('category-delete')) }}
+                                    <div class="state p-info">
+                                        <i class="icon material-icons">done</i>
+                                        <label>Delete</label>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Riders</td>
+                            <td>
+                                <div class="pretty p-icon p-jelly p-round p-bigger">
+                                    {{ Form::checkbox('permission[rider-list]', 'rider-list', $role->hasPermissionTo('rider-list')) }}
+                                    <div class="state p-info">
+                                        <i class="icon material-icons">done</i>
+                                        <label>List</label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="pretty p-icon p-jelly p-round p-bigger">
+                                    {{ Form::checkbox('permission[rider-create]', 'rider-create', $role->hasPermissionTo('rider-create')) }}
+                                    <div class="state p-info">
+                                        <i class="icon material-icons">done</i>
+                                        <label>Create</label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="pretty p-icon p-jelly p-round p-bigger">
+                                    {{ Form::checkbox('permission[rider-edit]', 'rider-edit', $role->hasPermissionTo('rider-edit')) }}
+                                    <div class="state p-info">
+                                        <i class="icon material-icons">done</i>
+                                        <label>Edit</label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="pretty p-icon p-jelly p-round p-bigger">
+                                    {{ Form::checkbox('permission[rider-delete]', 'rider-delete', $role->hasPermissionTo('rider-delete')) }}
+                                    <div class="state p-info">
+                                        <i class="icon material-icons">done</i>
+                                        <label>Delete</label>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Orders</td>
+                            <td>
+                                <div class="pretty p-icon p-jelly p-round p-bigger">
+                                    {{ Form::checkbox('permission[order-list]', 'order-list', $role->hasPermissionTo('order-list')) }}
                                     <div class="state p-info">
                                         <i class="icon material-icons">done</i>
                                         <label>List</label>
@@ -289,11 +354,12 @@
                                 </div>
                             </td>
                         </tr>
+
                         <tr>
-                            <td>Reports</td>
+                            <td>Rides</td>
                             <td>
                                 <div class="pretty p-icon p-jelly p-round p-bigger">
-                                    {{ Form::checkbox('permission[reports-list]', 'report-list', $role->hasPermissionTo('report-list')) }}
+                                    {{ Form::checkbox('permission[ride-list]', 'ride-list', $role->hasPermissionTo('ride-list')) }}
                                     <div class="state p-info">
                                         <i class="icon material-icons">done</i>
                                         <label>List</label>
@@ -301,6 +367,21 @@
                                 </div>
                             </td>
                         </tr>
+
+                        <tr>
+                            <td>My Account</td>
+                            <td>
+                                <div class="pretty p-icon p-jelly p-round p-bigger">
+                                    {{ Form::checkbox('permission[account-list]', 'account-list', $role->hasPermissionTo('account-list')) }}
+                                    <div class="state p-info">
+                                        <i class="icon material-icons">done</i>
+                                        <label>List</label>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+
                     </tbody>
                 </table>
 

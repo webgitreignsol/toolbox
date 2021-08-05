@@ -1,7 +1,7 @@
 <?php
-    
+
 namespace App\Http\Controllers\Admin\User;
-    
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
@@ -10,7 +10,7 @@ use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
 use Auth;
-    
+
 class UserController extends Controller
 {
     /**
@@ -23,7 +23,7 @@ class UserController extends Controller
         $users = User::orderBy('id', 'desc')->get();
         return view('admin.users.index',compact('users'));
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -34,7 +34,7 @@ class UserController extends Controller
         $roles = Role::pluck('name','name')->all();
         return view('admin.users.create',compact('roles'));
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -49,18 +49,18 @@ class UserController extends Controller
             'password' => 'required|same:confirm-password',
             'roles' => 'required'
         ]);
-    
+
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
         $input['added_by'] = Auth::user()->id;
-    
+
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
 
         Toastr::success('User created successfully.', 'Success');
        	return redirect()->route('users.index');
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -72,10 +72,10 @@ class UserController extends Controller
         $user = User::find($id);
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
-    
+
         return view('admin.users.edit',compact('user','roles','userRole'));
     }
-    
+
     /**
      * Update the specified resource in storage.
      *
@@ -93,25 +93,25 @@ class UserController extends Controller
             'password' => 'same:confirm-password',
             'roles' => 'required'
         ]);
-    
+
         $input = $request->all();
-        if(!empty($input['password'])){ 
+        if(!empty($input['password'])){
             $input['password'] = Hash::make($input['password']);
         }else{
-            $input['password'] = $user->password;   
+            $input['password'] = $user->password;
         }
 
         $input['updated_by'] = Auth::user()->id;
-    
+
         $user->update($input);
         DB::table('model_has_roles')->where('model_id',$id)->delete();
-    
+
         $user->assignRole($request->input('roles'));
 
         Toastr::success('User updated successfully.', 'Success');
        	return redirect()->route('users.index');
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *
@@ -123,5 +123,34 @@ class UserController extends Controller
         User::find($id)->delete();
         Toastr::success('User deleted successfully.', 'Success');
        	return redirect()->route('users.index');
+    }
+
+    public function account()
+    {
+        return view('admin.users.change_password');
+    }
+
+    public function changePassword(Request $request)
+    {
+        $user = User::find($request->user()->id);
+        $password = $request->get('password');
+        $new_password = $request->get('new_password');
+        $confirm_password = $request->get('new_password_confirmation');
+
+        $this->validate($request, [
+            'password' => 'required',
+            'new_password' => 'required|string|min:8|max:16|confirmed'
+        ]);
+        if(Hash::check($password, $user->password)) {
+            if($new_password == $confirm_password) {
+                $user->password = bcrypt($new_password);
+                $user->save();
+                Toastr::success('Password updated successfully.', 'Success');
+                return redirect()->route('users.password');
+            }
+        } else {
+            Toastr::warning('Please Insert Valid Password.', 'Warning');
+            return redirect()->route('users.password');
+        }
     }
 }

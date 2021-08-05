@@ -13,16 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-	Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
+Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
 
-	Auth::routes();
-	Route::get('/', function () { return redirect('/dashboard');
-	});
+Auth::routes();
+Route::get('/', function () { return redirect('/dashboard');
+});
 
 
-	Route::group(['namespace' => 'Dashboard', 'prefix' => 'dashboard', 'middleware' => ['auth']], function (){
-		Route::get('/', 'DashboardController@index')->name('dashboard');
-	});
+Route::group(['namespace' => 'Dashboard', 'prefix' => 'dashboard', 'middleware' => ['auth']], function (){
+    Route::get('/', 'DashboardController@index')->name('dashboard');
+});
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth']], function(){
 
@@ -38,42 +38,13 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
 	Route::group(['namespace' => 'User'], function (){
 		Route::get('users', 'UserController@index')->name('users.index')->middleware('permission:user-list');
 		Route::get('users/create', 'UserController@create')->name('users.create')->middleware('permission:user-create');
-		Route::post('users', 'UserController@store')->name('users.store')->middleware('permission:user-create');
-        Route::get('users/{id}/edit', 'UserController@edit')->name('users.edit')->middleware('permission:user-edit');
-        Route::get('users/{id}/view', 'UserController@view')->name('users.view');
+        Route::post('users', 'UserController@store')->name('users.store')->middleware('permission:user-create');
+        Route::post('users-change-password', 'UserController@changePassword')->name('users.change.password')->middleware('permission:account-list');
+        Route::get('users-password', 'UserController@account')->name('users.password')->middleware('permission:account-list');
+		Route::get('users/{id}/edit', 'UserController@edit')->name('users.edit')->middleware('permission:user-edit');
 		Route::put('users/{id}', 'UserController@update')->name('users.update')->middleware('permission:user-edit');
 		Route::any('users/{id}/destroy', 'UserController@destroy')->name('users.destroy')->middleware('permission:user-delete');
 	});
-
-    Route::group(['namespace' => 'CarType'], function (){
-        Route::get('car', 'CarTypeController@index')->name('car.index')->middleware('permission:car-list');
-        Route::get('car/create', 'CarTypeController@create')->name('car.create')->middleware('permission:car-create');
-        Route::post('car', 'CarTypeController@store')->name('car.store')->middleware('permission:car-create');
-        Route::get('car/{id}/edit', 'CarTypeController@edit')->name('car.edit')->middleware('permission:car-edit');
-        Route::put('car/{id}', 'CarTypeController@update')->name('car.update')->middleware('permission:car-edit');
-        Route::any('car/{id}/destroy', 'CarTypeController@destroy')->name('car.destroy')->middleware('permission:car-delete');
-    });
-
-	Route::group(['namespace' => 'Passenger'], function (){
-        Route::get('passengers', 'PassengerController@index')->name('passengers.index')->middleware('permission:passenger-list');
-        Route::get('passengers/create', 'PassengerController@create')->name('passengers.create')->middleware('permission:passenger-create');
-        Route::post('passengers', 'PassengerController@store')->name('passengers.store')->middleware('permission:passenger-create');
-        Route::get('passengers/{id}/edit', 'PassengerController@edit')->name('passengers.edit')->middleware('permission:passenger-edit');
-        Route::put('passengers/{id}', 'PassengerController@update')->name('passengers.update')->middleware('permission:passenger-edit');
-        Route::any('passengers/{id}/destroy', 'PassengerController@destroy')->name('passengers.destroy')->middleware('permission:passenger-delete');
-    });
-
-    Route::group(['namespace' => 'Driver'], function (){
-        Route::get('drivers', 'DriverController@index')->name('drivers.index')->middleware('permission:driver-list');
-        Route::get('drivers/create', 'DriverController@create')->name('drivers.create')->middleware('permission:driver-create');
-        Route::post('drivers', 'DriverController@store')->name('drivers.store')->middleware('permission:driver-create');
-        Route::get('drivers/{id}/edit', 'DriverController@edit')->name('drivers.edit')->middleware('permission:driver-edit');
-        Route::put('drivers/{id}', 'DriverController@update')->name('drivers.update')->middleware('permission:driver-edit');
-        Route::any('drivers/{id}/destroy', 'DriverController@destroy')->name('drivers.destroy')->middleware('permission:driver-delete');
-        Route::any('drivers/session', 'SessionController@index')->name('drivers.session')->middleware('permission:driver-list');
-        Route::get('session/{id}/edit', 'SessionController@edit')->name('session.edit')->middleware('permission:driver-edit');
-        Route::post('session/{id}/update', 'SessionController@update')->name('session.update')->middleware('permission:driver-edit');
-    });
 
 	Route::group(['namespace' => 'Permission'], function (){
 		Route::get('permissions', 'PermissionController@index')->name('permissions.index')->middleware('permission:permission-list');
@@ -84,29 +55,66 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
 		Route::any('permissions/{id}/destroy', 'PermissionController@destroy')->name('permissions.destroy')->middleware('permission:permission-delete');
 	});
 
-	Route::group(['namespace' => 'Rides'], function (){
-		Route::get('rides', 'IndexController@index')->name('rides.index')->middleware('permission:ride-list');
-		Route::get('rides/accepted', 'IndexController@accepted')->name('rides.accepted')->middleware('permission:ride-list');
-		Route::get('rides/completed', 'IndexController@completed')->name('rides.completed')->middleware('permission:ride-list');
-		Route::get('rides/cancelled', 'IndexController@cancelled')->name('rides.cancelled')->middleware('permission:ride-list');
-		Route::get('rides/{id}', 'IndexController@view')->name('rides.view')->middleware('permission:ride-list');
-	});
-
-    Route::group(['namespace' => 'Fares'], function (){
-        Route::put('fare/{id}', 'FareController@update')->name('fare.update');
-        Route::get('fare/', 'FareController@edit')->name('fare.edit');
+    Route::group(['namespace' => 'Vendor'], function (){
+        Route::get('vendor', 'VendorController@index')->name('vendor.index')->middleware('permission:vendor-list');
+        Route::get('vendor/create', 'VendorController@create')->name('vendor.create')->middleware('permission:vendor-create');
+        Route::post('vendor', 'VendorController@store')->name('vendor.store')->middleware('permission:vendor-create');
+        Route::get('vendor/{id}/edit', 'VendorController@edit')->name('vendor.edit')->middleware('permission:vendor-edit');
+        Route::put('vendor/{id}', 'VendorController@update')->name('vendor.update')->middleware('permission:vendor-edit');
+        Route::any('vendor/{id}/destroy', 'VendorController@destroy')->name('vendor.destroy')->middleware('permission:vendor-delete');
     });
 
-    Route::group(['namespace' => 'Commission'], function (){
-        Route::put('commission/{id}', 'CommissionController@update')->name('commission.update');
-        Route::get('commission/', 'CommissionController@edit')->name('commission.edit');
+    Route::group(['namespace' => 'Rider'], function (){
+        Route::get('rider', 'RiderController@index')->name('rider.index')->middleware('permission:rider-list');
+        Route::get('rider/create', 'RiderController@create')->name('rider.create')->middleware('permission:rider-create');
+        Route::post('rider', 'RiderController@store')->name('rider.store')->middleware('permission:rider-create');
+        Route::get('rider/{id}/edit', 'RiderController@edit')->name('rider.edit')->middleware('permission:rider-edit');
+        Route::put('rider/{id}', 'RiderController@update')->name('rider.update')->middleware('permission:rider-edit');
+        Route::put('rider-approve/{id}', 'RiderController@updateApproval')->name('rider.approve');
+        Route::put('rider-status/{id}', 'RiderController@updateStatus')->name('rider.status');
+        Route::any('rider/{id}/destroy', 'RiderController@destroy')->name('rider.destroy')->middleware('permission:rider-delete');
     });
 
-    Route::group(['namespace' => 'Orders'], function (){
-		Route::get('reports/rides', 'OrderController@index')->name('reports.index')->middleware('permission:report-list');
-        Route::get('reports/{id}/edit', 'OrderController@edit')->name('reports.edit');
-        Route::put('reports/{id}', 'OrderController@update')->name('reports.update');
-		Route::post('reports/search', 'OrderController@search')->name('reports.search')->middleware('permission:report-list');
-	});
+    Route::group(['namespace' => 'Product'], function (){
+        Route::get('product', 'ProductController@index')->name('product.index')->middleware('permission:product-list');
+        Route::get('product/create', 'ProductController@create')->name('product.create')->middleware('permission:product-create');
+        Route::post('product', 'ProductController@store')->name('product.store')->middleware('permission:product-create');
+        Route::get('product/{id}/edit', 'ProductController@edit')->name('product.edit')->middleware('permission:product-edit');
+        Route::put('product/{id}', 'ProductController@update')->name('product.update')->middleware('permission:product-edit');
+        Route::put('product-status/{id}', 'ProductController@updateStatus')->name('product.status');
+        Route::any('product/{id}/destroy', 'ProductController@destroy')->name('product.destroy')->middleware('permission:product-delete');
+    });
+
+    Route::group(['namespace' => 'Category'], function (){
+        Route::get('category', 'CategoryController@index')->name('category.index')->middleware('permission:category-list');
+        Route::get('category/create', 'CategoryController@create')->name('category.create')->middleware('permission:category-create');
+        Route::post('category', 'CategoryController@store')->name('category.store')->middleware('permission:category-create');
+        Route::get('category/{id}/edit', 'CategoryController@edit')->name('category.edit')->middleware('permission:category-edit');
+        Route::put('category/{id}', 'CategoryController@update')->name('category.update')->middleware('permission:category-edit');
+        Route::any('category/{id}/destroy', 'CategoryController@destroy')->name('category.destroy')->middleware('permission:category-delete');
+    });
+
+    Route::group(['namespace' => 'Shop'], function (){
+        Route::get('shop', 'ShopsController@index')->name('shop.index')->middleware('permission:shop-list');
+        Route::get('shop/create', 'ShopsController@create')->name('shop.create')->middleware('permission:shop-create');
+        Route::post('shop', 'ShopsController@store')->name('shop.store')->middleware('permission:shop-create');
+        Route::get('shop/{id}/edit', 'ShopsController@edit')->name('shop.edit')->middleware('permission:shop-edit');
+        Route::put('shop/{id}', 'ShopsController@update')->name('shop.update')->middleware('permission:shop-edit');
+        Route::put('shop-status/{id}', 'ShopsController@updateStatus')->name('shop.status');
+        Route::put('shop-approve/{id}', 'ShopsController@updateApproval')->name('shop.approve');
+        Route::any('shop/{id}/destroy', 'ShopsController@destroy')->name('shop.destroy')->middleware('permission:shop-delete');
+    });
+
+    Route::group(['namespace' => 'Order'], function (){
+        Route::get('order', 'OrdersController@index')->name('order.index')->middleware('permission:order-list');
+        Route::get('order/{id}/edit', 'OrdersController@edit')->name('order.edit')->middleware('permission:order-edit');
+        Route::put('order/{id}', 'OrdersController@update')->name('order.update')->middleware('permission:order-edit');
+        Route::any('order/{id}/destroy', 'OrdersController@destroy')->name('order.destroy')->middleware('permission:order-delete');
+    });
+
+    Route::group(['namespace' => 'Rides'], function (){
+        Route::get('rides/cancelled', 'RidesController@cancelled')->name('rides.cancelled')->middleware('permission:ride-list');
+    });
+
 
 });
