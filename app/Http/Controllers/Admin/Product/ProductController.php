@@ -14,10 +14,11 @@ class ProductController extends Controller
 {
      public function index(Request $request)
     {
-        if (Auth::user()->hasRole('Admin')) {
-            $products = Product::latest()->paginate(10);
-        } else {
+        if (auth()->user()->roles[0]->type == 'Vendor')
+        {
             $products = Product::where('user_id', Auth::user()->id)->paginate(10);
+        } else {
+            $products = Product::latest()->paginate(10);
         }
         return view('admin.product.index',compact('products'));
     }
@@ -33,7 +34,8 @@ class ProductController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'category' => 'required',
-            'price' => 'required'
+            'price' => 'required',
+            'shop_id' => 'required'
         ]);
 
         $crimage = $request->file('image');
@@ -64,7 +66,8 @@ class ProductController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'category' => 'required',
-            'price' => 'required'
+            'price' => 'required',
+            'shop_id' => 'required'
         ]);
 
         if($request->hasFile('image')) {
@@ -93,7 +96,10 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        Product::find($id)->delete();
+        $product = Product::find($id);
+        $image = $product->image;
+        $product->delete();
+        File::delete(public_path('assets/admin/img/products/').$image);
         Toastr::success('Product deleted successfully.', 'Success');
         return redirect()->route('product.index');
     }

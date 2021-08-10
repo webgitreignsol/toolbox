@@ -223,6 +223,12 @@
                           @can('ride-list')
                               <li class="{{ Request::is('admin/rides') ? 'active' : '' }}"><a class="nav-link" href="{{ route('rides.cancelled') }}">Cancelled Rides</a></li>
                           @endcan
+                              @can('ride-list')
+                                  <li class="{{ Request::is('admin/rides') ? 'active' : '' }}"><a class="nav-link" href="{{ route('rides.completed') }}">Completed Rides</a></li>
+                              @endcan
+                              @can('ride-list')
+                                  <li class="{{ Request::is('admin/rides') ? 'active' : '' }}"><a class="nav-link" href="{{ route('rides.started') }}">On Going Rides</a></li>
+                              @endcan
                       </ul>
                   </li>
               @endif

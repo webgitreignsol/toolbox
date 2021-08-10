@@ -114,6 +114,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
 
     Route::group(['namespace' => 'Rides'], function (){
         Route::get('rides/cancelled', 'RidesController@cancelled')->name('rides.cancelled')->middleware('permission:ride-list');
+        Route::get('rides/completed', 'RidesController@completed')->name('rides.completed')->middleware('permission:ride-list');
+        Route::get('rides/started', 'RidesController@started')->name('rides.started')->middleware('permission:ride-list');
     });
 
 

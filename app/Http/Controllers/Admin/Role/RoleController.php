@@ -46,7 +46,7 @@ class RoleController extends Controller
             'name' => 'required|unique:roles,name',
             'permission' => 'required',
         ]);
-    
+
         $role = Role::create(['name' => $request->input('name'), 'added_by' => Auth::user()->id]);
         $role->syncPermissions($request->input('permission'));
 
@@ -84,9 +84,10 @@ class RoleController extends Controller
             'name' => 'required',
             'permission' => 'required',
         ]);
-    
+
         $role = Role::find($id);
         $role->name = $request->input('name');
+        $role->type = $request->type;
         $role->updated_by = Auth::user()->id;
         $role->save();
     

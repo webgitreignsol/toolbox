@@ -64,5 +64,5 @@ class UserProfile extends Model
    public function services(){
 
       return $this->belongsTo('App\Service', 'user_id');
-  }  
+  }
 }

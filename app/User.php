@@ -19,7 +19,7 @@ class User extends Authenticatable
 {
     use Notifiable;
     use HasRoles;
-    use HasApiTokens;
+    use HasApiTokens,Notifiable;
     use LogsActivity;
 
 
@@ -34,7 +34,7 @@ class User extends Authenticatable
         'added_by', 'updated_by', 'name', 'country_code', 'phone', 'email', 'type', 'password', 'otp', 'device_type', 'device_token', 'verified_by', 'social_provider', 'social_token', 'social_id',
     ];
 
-    protected $appends = ['ratings'];
+//    protected $appends = ['ratings'];
 
     protected static $logAttributes = ['added_by', 'updated_by', 'name', 'country_code', 'phone', 'email', 'type', 'password', 'otp', 'device_type', 'device_token', 'verified_by', 'social_provider', 'social_token', 'social_id'];
     protected static $logName = 'User';
@@ -205,7 +205,7 @@ class User extends Authenticatable
             }
         }
 
-        $user->token = $tokenResult->accessToken;
+        $user->token = 'Bearer ' . $tokenResult->accessToken;
         // $user->roles = $user->roles ?? [];
         return $user;
     }
@@ -216,7 +216,10 @@ class User extends Authenticatable
         $validationRules['password'] = 'required|string|min:8|max:16|confirmed';
         $validationRules['verified_by'] = 'required|in:email';
         $validationRules['email'] = 'required|string|email|min:5|max:155|unique:users';
-        $validationRules['country_code'] = 'required|numeric';
+        $validationRules['zip_code'] = 'required|numeric';
+        $validationRules['state'] = 'required';
+        $validationRules['city'] = 'required';
+        $validationRules['address'] = 'required';
         $validationRules['phone'] = 'required|numeric|digits_between:9,14|unique:users';
 
         $validator = Validator::make($request->all(), $validationRules);
@@ -235,7 +238,10 @@ class User extends Authenticatable
             $data = [
                 'name' => $request->name,
                 'email' => $request->email,
-                'country_code' => $request->country_code,
+                'zip_code' => $request->country_code,
+                'address' => $request->address,
+                'state' => $request->state,
+                'city' => $request->city,
                 'phone' => $request->phone,
                 'password' => bcrypt($request->password),
                 'verified_by' => $type,
@@ -358,17 +364,17 @@ class User extends Authenticatable
         return $record;
     }
 
-    public function updateProfile($request, $id)
+    public function updateProfile($request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|between:3,55',
+            'name' => 'required',
         ]);
 
         if ($validator->fails()) {
             return $validator;
         }
 
-        $record = $this::find($id);
+        $record = $this::find(Auth::user()->id);
         $record->name = $request->name;
         $record->save();
 
@@ -376,37 +382,26 @@ class User extends Authenticatable
 
             $fileName = null;
             if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $fileName = md5($file->getClientOriginalName()) . time() . "." . $file->getClientOriginalExtension();
-                $file->move('./uploads/user-profile', $fileName);
+                $image = $request->file('image');
+                $image_name = rand().'.'. $image->getClientOriginalExtension();
+                $image->move(public_path('assets/admin/userImg/'), $image_name);
             }
 
             $userProfile = UserProfile::where('user_id', $record->id)->first();
             if ($userProfile) {
                 $userProfile->location = $request->location;
-                $userProfile->image = '/uploads/user-profile/'.$fileName;
+                $userProfile->image = $image_name;
                 $userProfile->save();
             } else {
                 $userProfile = new UserProfile();
                 $userProfile->location = $request->location;
-                $userProfile->image = '/uploads/user-profile/'.$fileName;
+                $userProfile->image = $image_name;
                 $userProfile->user_id = \Auth::user()->id;
                 $userProfile->save();
             }
         }
 
         return $record;
-    }
-
-    public function getProfile($request, $id)
-    {
-        $record = $this->find($id);
-
-        if (!$record) {
-            return 'Unauthorized';
-        }
-
-        return (new GetUserProfile($record))->resolve();
     }
 
     public function userFacebookAuth($request)

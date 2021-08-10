@@ -13,11 +13,7 @@ class CategoryController extends Controller
 {
     public function index(Request $request)
     {
-        if (Auth::user()->hasRole('Admin')) {
-            $categories = Category::latest()->paginate(10);
-        } else {
-            $categories = Category::where('user_id', Auth::user()->id)->paginate(10);
-        }
+        $categories = Category::latest()->paginate(10);
         return view('admin.category.index',compact('categories'));
     }
 

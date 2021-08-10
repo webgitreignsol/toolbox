@@ -17,7 +17,6 @@
                       <tr>
                         <th>No</th>
                         <th>Order Id</th>
-                        <th>Product Name</th>
                         <th>Rider Name</th>
                         <th>Customer Name</th>
                         <th>Status</th>
@@ -27,11 +26,10 @@
                       @foreach ($orders as $key => $order)
                       <tr>
                           <td>{{ $key + 1 }}</td>
-                         <td>{{ $product->order_id }}</td>
-                          <td>{{ $product->product_name }}</td>
-                          <td>{{ $product->rider_name }}</td>
-                          <td>{{ $product->customer_name }}</td>
-                        <td>{{ $product->status }}</td>
+                         <td>{{ $order->order_id }}</td>
+                          <td>{{ $order->rider->name }}</td>
+                          <td>{{ $order->customer->name }}</td>
+                        <td>{{ $order->status }}</td>
                       </tr>
                       @endforeach
                     </tbody>

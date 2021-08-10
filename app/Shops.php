@@ -10,7 +10,7 @@ class Shops extends Model
     use LogsActivity;
     protected $table = 'shops';
 
-    protected $fillable = ['name', 'description','user_id'];
+    protected $fillable = ['name', 'description','user_id','image'];
 
     protected static $logName = 'Shop';
     protected static $logOnlyDirty = true;

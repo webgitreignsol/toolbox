@@ -31,6 +31,17 @@
                         </div>
                     </div>
                     <div class="form-group row mb-4">
+                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Select Shop</label>
+                        <div class="col-sm-12 col-md-7">
+                            <select name="shop_id" id="shop_id" class="form-control selectric" required>
+                                <option value="">:: Select Shop ::</option>
+                                @foreach($shops as $shop)
+                                    <option value="{{ $shop->id }}" <?php if($product->shop_id== $shop->id){ echo 'selected'; } ?>>{{ $shop->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Select Category</label>
                         <div class="col-sm-12 col-md-7">
                             <select name="category" id="category" class="form-control selectric" required>

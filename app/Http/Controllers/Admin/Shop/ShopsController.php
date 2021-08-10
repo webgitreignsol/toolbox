@@ -8,6 +8,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Validator;
 use App\Shops;
 use Auth;
+use File;
 
 class ShopsController extends Controller
 {
@@ -41,7 +42,12 @@ class ShopsController extends Controller
             'name' => 'required',
         ]);
 
+        $crimage = $request->file('image');
+        $img = rand().'.'. $crimage->getClientOriginalExtension();
+        $crimage->move(public_path('assets/admin/img/shops/'), $img);
+
         $input = $request->all();
+        $input['image'] = $img;
         $input['user_id'] = Auth::user()->id;
 
         Shops::create($input);
@@ -64,9 +70,19 @@ class ShopsController extends Controller
             'name' => 'required'
         ]);
 
+        if($request->hasFile('image')) {
+            $crimage = $request->file('image');
+            $img = rand().'.'. $crimage->getClientOriginalExtension();
+            $crimage->move(public_path('assets/admin/img/shops/'), $img);
+        } else {
+            $img = $shop->image;
+        }
+
         $input = $request->all();
         $input['user_id'] = Auth::user()->id;
+        $input['image'] = $img;
         $shop->update($input);
+
 
         Toastr::success('Shop updated successfully.', 'Success');
         return redirect()->route('shop.index');
@@ -74,7 +90,10 @@ class ShopsController extends Controller
 
     public function destroy($id)
     {
-        Shops::find($id)->delete();
+        $shops = Shops::find($id);
+        $image = $shops->image;
+        $shops->delete();
+        File::delete(public_path('assets/admin/img/shops/').$image);
         Toastr::success('Shop deleted successfully.', 'Success');
         return redirect()->route('shop.index');
     }

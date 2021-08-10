@@ -19,6 +19,17 @@
                   </div>
                 </div>
 
+                    <div class="form-group row mb-4">
+                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Select Type</label>
+                        <div class="col-sm-12 col-md-7">
+                            <select name="type" id="type" class="form-control selectric" required>
+                                <option value="">:: Select Type ::</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Vendor">Vendor</option>
+                            </select>
+                        </div>
+                    </div>
+
                 <table class="table table-bordered table-striped text-center mb-3 table-responsive-xl">
                     <thead>
                     <tr>

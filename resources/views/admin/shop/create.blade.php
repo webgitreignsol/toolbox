@@ -10,7 +10,7 @@
               <div class="card-header">
                 <h4>Create New Shop</h4>
               </div>
-              {!! Form::open(array('route' => 'shop.store','method'=>'POST')) !!}
+              {!! Form::open(array('route' => 'shop.store','method'=>'POST', 'enctype' => 'multipart/form-data')) !!}
                 <div class="card-body">
                 <div class="form-group row mb-4">
                   <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Name</label>
@@ -18,6 +18,12 @@
                     {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
                   </div>
                 </div>
+                    <div class="form-group row mb-4">
+                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Image</label>
+                        <div class="col-sm-12 col-md-7">
+                            {!! Form::file('image', null, array('placeholder' => 'Image','class' => 'form-control')) !!}
+                        </div>
+                    </div>
                     <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Description</label>
                         <div class="col-sm-12 col-md-7">
