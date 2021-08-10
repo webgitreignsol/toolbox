@@ -34,7 +34,7 @@ class User extends Authenticatable
         'added_by', 'updated_by', 'name', 'country_code', 'phone', 'email', 'type', 'password', 'otp', 'device_type', 'device_token', 'verified_by', 'social_provider', 'social_token', 'social_id',
     ];
 
-//    protected $appends = ['ratings'];
+    protected $appends = ['rating'];
 
     protected static $logAttributes = ['added_by', 'updated_by', 'name', 'country_code', 'phone', 'email', 'type', 'password', 'otp', 'device_type', 'device_token', 'verified_by', 'social_provider', 'social_token', 'social_id'];
     protected static $logName = 'User';
