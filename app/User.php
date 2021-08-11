@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\Frontend\User\GetProfile as GetUserProfile;
 use App\Http\Resources\Frontend\Vendor\Listing as VendorListings;
 use App\UserProfile;
+use App\Rating;
+
 
 class User extends Authenticatable
 {
@@ -34,7 +36,7 @@ class User extends Authenticatable
         'added_by', 'updated_by', 'name', 'country_code', 'phone', 'email', 'type', 'password', 'otp', 'device_type', 'device_token', 'verified_by', 'social_provider', 'social_token', 'social_id',
     ];
 
-    protected $appends = ['rating'];
+    protected $appends = ['ratings'];
 
     protected static $logAttributes = ['added_by', 'updated_by', 'name', 'country_code', 'phone', 'email', 'type', 'password', 'otp', 'device_type', 'device_token', 'verified_by', 'social_provider', 'social_token', 'social_id'];
     protected static $logName = 'User';
@@ -59,11 +61,11 @@ class User extends Authenticatable
     ];
 
 
-    public function getRatingsAttribute($val) {
-        $count = Rating::where('get_review', $this->id)
-                 ->avg('rating');
-                 return $count ?? 0;
-    }
+        public function getRatingsAttribute($val) {
+            $count = Rating::where('get_review', $this->id)
+                     ->avg('rating');
+                     return $count ?? 0;
+        }
 
     // Auth Section Start Created by MYTECH
 
@@ -636,7 +638,6 @@ class User extends Authenticatable
 
     public function user_profiles()
     {
-
         return $this->HasOne('App\UserProfile');
     }
 
@@ -652,8 +653,9 @@ class User extends Authenticatable
 
     public function ratings()
     {
-        return $this->hasMany('App\Rating', 'driver_id');
+        return $this->hasMany('App\Rating', 'rider_id');
     }
+
 
 
 

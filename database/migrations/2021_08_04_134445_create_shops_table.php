@@ -18,6 +18,8 @@ class CreateShopsTable extends Migration
             $table->string('name');
             $table->string('status');
             $table->string('approve');
+            $table->string('opening_hours');
+            $table->string('image');
             $table->text('description');
             $table->integer('user_id');
             $table->timestamps();

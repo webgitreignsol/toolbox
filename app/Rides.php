@@ -15,9 +15,26 @@ class Rides extends Model
     protected static $logName = 'Rides';
     protected static $logOnlyDirty = true;
 
+    public function getAlltrips()
+    {
+        $trips = Rides::where('rider_id', \Auth::user()->id)->latest()->paginate(10);
+        return $trips;
+    }
+
+    public function getScheduledtrips($request)
+    {
+        $trips = $this::where('rider_id', Auth::user()->id)->where('start_at', '>', now())->latest()->paginate(10);
+        return $trips;
+    }
+
     public function customer()
     {
         return $this->belongsTo('App\User', 'customer_id');
+    }
+
+    public function profile()
+    {
+        return $this->belongsTo('App\UserProfile', 'user_id');
     }
 
     public function shop()

@@ -35,6 +35,31 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
                 Route::get('get-profile','AuthController@getProfile');
                 Route::post('sign-out','AuthController@signOut');
                 Route::post('change-password','AuthController@changePassword');
+                Route::post('create-rider-rating','AuthController@CreateRiderRatings');
+
+
+                Route::get('get-wishlist','WishlistController@getWishlist');
+                Route::get('remove-wishlist/{id}','WishlistController@removeWishlist');
+                Route::post('create-wishlist','WishlistController@store');
+
+                Route::get('get-user-address','AddressController@getUserAddress');
+                Route::post('create-address','AddressController@store');
+                Route::post('update-address/{id}','AddressController@update');
+
+
+                Route::get('get-all-product','ProductController@getAllProducts');
+                Route::post('create-product-rating','ProductController@ProductRating');
+                Route::post('search-products','ProductController@search');
+
+                Route::get('get-all-shop','ShopsController@getAllShops');
+                Route::post('create-shop-rating','ShopsController@ShopRating');
+
+
+
+                Route::get('get-order-process','OrderController@getProcessOrders');
+                Route::get('get-order-delivered','OrderController@getDeliveredOrders');
+
+
             });
         });
 
@@ -52,6 +77,22 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
                 Route::get('get-profile','AuthController@getProfile');
                 Route::post('sign-out','AuthController@signOut');
                 Route::post('change-password','AuthController@changePassword');
+
+
+                // Bank Detail
+                Route::get('get-bank-detail','BankDetailController@getBankDetail');
+                Route::post('update-bank-detail','BankDetailController@updateBankDetail');
+
+                // Rider Trips
+                Route::get('trip-req/{id}', 'RiderController@TripReq');
+                Route::get('my-trips', 'RiderController@getAlltrips');
+                Route::get('scheduled-trips', 'RiderController@getScheduledtrips');
+                Route::get('accepted-ride', 'RiderController@RideAccepted');
+                Route::post('ride-status/{id}', 'RiderController@rideStatus');
+
+                // Rider Earning
+                Route::get('rider-earning', 'OrderController@riderEarning');
+                Route::post('search-rider-earning', 'OrderController@search');
             });
         });
 

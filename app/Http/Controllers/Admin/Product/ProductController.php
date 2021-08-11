@@ -35,7 +35,9 @@ class ProductController extends Controller
             'name' => 'required',
             'category' => 'required',
             'price' => 'required',
-            'shop_id' => 'required'
+            'qty' => 'required',
+            'shop_id' => 'required',
+            'description' => 'required',
         ]);
 
         $crimage = $request->file('image');
@@ -67,7 +69,9 @@ class ProductController extends Controller
             'name' => 'required',
             'category' => 'required',
             'price' => 'required',
-            'shop_id' => 'required'
+            'qty' => 'required',
+            'shop_id' => 'required',
+            'description' => 'required'
         ]);
 
         if($request->hasFile('image')) {
@@ -84,6 +88,7 @@ class ProductController extends Controller
             'category' => request()->get('category'),
             'price' => request()->get('price'),
             'description' => request()->get('description'),
+            'qty' => request()->get('qty'),
             'user_id' => Auth::user()->id,
             'image' => $img
         ]);

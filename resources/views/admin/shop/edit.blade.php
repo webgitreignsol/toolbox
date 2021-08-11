@@ -25,6 +25,12 @@
                         </div>
                     </div>
                     <div class="form-group row mb-4">
+                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Opening Hours</label>
+                        <div class="col-sm-12 col-md-7">
+                            {!! Form::text('opening_hours', null, array('placeholder' => 'Opening Hours','class' => 'form-control')) !!}
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Description</label>
                         <div class="col-sm-12 col-md-7">
                             {!! Form::textarea('description', null, array('placeholder' => 'Description','class' => 'form-control')) !!}

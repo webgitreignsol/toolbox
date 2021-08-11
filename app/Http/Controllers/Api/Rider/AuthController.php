@@ -68,14 +68,30 @@ class AuthController extends Controller
 
     public function signOut(Request $request)
     {
-        $user = $request->user();
+        try
+        {
+            $record = new User();
+            $record = $record->signOut($request);
 
-        $user->forceFill([
-            'device_type' => null,
-            'device_token' => null,
-        ])->save();
-        if ($user) {
-            return response()->json(["status" => 1, "message" => 'Logout Successful', "data" => []]);
+            if (!$record instanceof User)
+            {
+                if (gettype($record) == 'string')
+                {
+                    return $this->apiErrorMessageResponse($record, []);
+                }
+                else
+                {
+                    return $this->apiValidatorErrorResponse('Invalid Parameters', $record->errors());
+                }
+            }
+            else
+            {
+                return $this->apiSuccessMessageResponse('Logout Successfully');
+            }
+        }
+        catch (Exception $e)
+        {
+            return $this->apiErrorMessageResponse($e->getMessage(), []);
         }
     }
 

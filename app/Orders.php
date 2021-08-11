@@ -10,7 +10,7 @@ class Orders extends Model
     use LogsActivity;
     protected $table = 'orders';
 
-    protected $fillable = ['order_id', 'order_date', 'rider_id','customer_id','accept_reject_order','status'];
+    protected $fillable = ['order_id', 'order_date', 'rider_id','customer_id','accept_reject_order','status','user_id','sub_total','vat','grand_total','paid_amount','tip','delivery_charges'];
 
     protected static $logName = 'Order';
     protected static $logOnlyDirty = true;
