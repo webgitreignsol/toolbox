@@ -24,4 +24,9 @@ class Orders extends Model
     {
         return $this->belongsTo('App\User', 'rider_id');
     }
+
+    public function riderDetail()
+    {
+        return $this->belongsTo('App\RiderDetail', 'rider_id');
+    }
 }

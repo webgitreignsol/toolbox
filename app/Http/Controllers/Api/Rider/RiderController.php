@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\rider;
 
 use App\Http\Controllers\Controller;
+use App\RiderDetail;
 use Illuminate\Http\Request;
 use App\Trip;
 use App\Rides;
@@ -13,6 +14,47 @@ use DB;
 
 class RiderController extends Controller
 {
+    public function riderDetail(Request $request)
+    {
+        $validator = Validator::make($request->all(), RiderDetail::$rules);
+
+        if ($validator->fails()) {
+
+            return response()->json(['errors'=>$validator->errors()]);
+        }
+
+        $drimage = $request->file('rider_photo');
+        $crimage = $request->file('vehicle_photo');
+
+        $dr_img = rand().'.'. $drimage->getClientOriginalExtension();
+        $drimage->move(public_path('assets/admin/riderImg'), $dr_img);
+
+        $cr_img = rand().'.'. $crimage->getClientOriginalExtension();
+        $crimage->move(public_path('assets/admin/carImg'), $cr_img);
+
+        $auth_id = Auth::user()->id;
+        $driver = RiderDetail::where('rider_id', $auth_id)->first();
+        $arr = array(
+            'rider_contact' 			   => $request->rider_contact,
+            'rider_photo' 				   => $dr_img,
+            'vehicle_photo' 				     => $cr_img,
+            'vehicle_make' 					     => $request->vehicle_make,
+            'vehicle_registration_number'=> $request->vehicle_registration_number,
+            'rider_id' 				     => Auth::user()->id
+        );
+
+        if ($driver == null) {
+            RiderDetail::create($arr);
+        }else{
+            RiderDetail::where('rider_id', $auth_id)->update($arr);
+        }
+        return response()->json([
+            'message'     => 'Success',
+            'status'      => 1,
+            'data'        => $arr
+        ]);
+    }
+
     public function getAlltrips()
     {
         $records = Rides::with('customer' )->orderBy('created_at', 'desc')->where('rider_id', Auth::user()->id)->get();
@@ -36,7 +78,7 @@ class RiderController extends Controller
 
     public function RideAccepted()
     {
-        $records = Rides::with('shop' )->where('rider_id', Auth::user()->id)->where('status', 'accepted')->first();
+        $records = Rides::with('shop' ,'riderDetail' )->where('rider_id', Auth::user()->id)->where('status', 'accepted')->first();
         if (!$records) {
             return response()->json(["status" => 0, "message" => 'Undefined Ride', "data" => []]);
         }

@@ -21,7 +21,6 @@ class OrderController extends Controller
         $sum = Orders::where('status','Order Delivered')->where('rider_id',Auth::user()->id)->select('rider_id', DB::raw('SUM(delivery_charges) as charges'))
             ->groupBy('rider_id')
             ->get();
-//        $sum = Orders::where('status','Order Delivered')->where('rider_id',Auth::user()->id)->sum('delivery_charges');
         return response()->json(["status" => 1, "message" => 'Your Earning', "data" => [$orders,$sum]]);
     }
 

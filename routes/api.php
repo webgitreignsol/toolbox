@@ -56,6 +56,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
 
 
 
+                Route::post('order-process','OrderController@OrderProceed');
                 Route::get('get-order-process','OrderController@getProcessOrders');
                 Route::get('get-order-delivered','OrderController@getDeliveredOrders');
 
@@ -89,6 +90,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function() {
                 Route::get('scheduled-trips', 'RiderController@getScheduledtrips');
                 Route::get('accepted-ride', 'RiderController@RideAccepted');
                 Route::post('ride-status/{id}', 'RiderController@rideStatus');
+                Route::post('ride-detail', 'RiderController@riderDetail');
 
                 // Rider Earning
                 Route::get('rider-earning', 'OrderController@riderEarning');

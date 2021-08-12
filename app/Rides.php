@@ -42,6 +42,11 @@ class Rides extends Model
         return $this->belongsTo('App\Shops', 'shop_id');
     }
 
+    public function riderDetail()
+    {
+        return $this->belongsTo('App\RiderDetail', 'rider_id');
+    }
+
     public function rider()
     {
         return $this->belongsTo('App\User', 'rider_id');
